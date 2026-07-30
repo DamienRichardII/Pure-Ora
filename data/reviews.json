@@ -1,0 +1,18 @@
+{
+  "note": "Aucun avis authentique n'a encore été transmis par la marque. Les entrées ci-dessous sont des exemples de mise en page strictement identifiés comme tels et sont masquées en production tant qu'elles ne sont pas remplacées par de vrais avis validés.",
+  "published": false,
+  "reviews": [
+    {
+      "id": "exemple-1",
+      "isDemoContent": true,
+      "firstName": "Exemple de mise en page",
+      "rating": 5,
+      "text": "Ceci est un exemple de mise en page destiné à illustrer l'affichage d'un avis client. Ce texte doit être remplacé par un avis authentique avant la mise en ligne.",
+      "product": "Postiche semi-naturelle Pure Ora",
+      "photo": null,
+      "verifiedPurchase": false,
+      "date": "À compléter",
+      "status": "demo"
+    }
+  ]
+}

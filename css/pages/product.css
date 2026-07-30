@@ -1,0 +1,14 @@
+.product-page { display: grid; gap: var(--space-lg); padding-top: var(--space-md); }
+@media (min-width: 960px) { .product-page { grid-template-columns: 1.1fr 0.9fr; } }
+.product-tabs { margin-top: var(--space-lg); }
+.product-tabs__nav { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--border-soft); overflow-x: auto; }
+.product-tabs__nav button { padding-block: 0.9rem; font-weight: 700; white-space: nowrap; border-bottom: 2px solid transparent; }
+.product-tabs__nav button[aria-selected="true"] { border-color: var(--pure-ora-burgundy); color: var(--pure-ora-burgundy); }
+.product-tabs__panel { padding-block: var(--space-md); display: none; }
+.product-tabs__panel.is-active { display: block; }
+.variant-group { margin-bottom: var(--space-sm); }
+.variant-group[hidden] { display: none; }
+.variant-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.variant-swatch { border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700; }
+.variant-swatch[aria-pressed="true"] { background: var(--pure-ora-burgundy); color: var(--pure-ora-cream); border-color: var(--pure-ora-burgundy); }
+.related-products { margin-top: var(--space-xl); }

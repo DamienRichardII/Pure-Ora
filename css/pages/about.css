@@ -1,0 +1,5 @@
+.about-hero { display: grid; gap: var(--space-lg); align-items: center; }
+@media (min-width: 900px) { .about-hero { grid-template-columns: 0.9fr 1.1fr; } }
+.about-values { display: grid; gap: var(--space-md); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 720px) { .about-values { grid-template-columns: repeat(4, 1fr); } }
+.about-gallery { display: grid; gap: var(--space-sm); grid-template-columns: repeat(3, 1fr); }

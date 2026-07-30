@@ -1,0 +1,60 @@
+{
+  "brand": {
+    "name": "Pure Ora",
+    "founder": "Sheila Mavinga",
+    "tagline": "L'élégance en quelques minutes.",
+    "shortDescription": "Postiches semi-naturelles faciles à installer, élégantes, légères et réutilisables.",
+    "logoText": "Pure Ora"
+  },
+  "announcementBar": {
+    "enabled": true,
+    "text": "Livraison en France et à Kinshasa"
+  },
+  "contact": {
+    "whatsapp": "",
+    "whatsappMessage": "Bonjour Pure Ora, je souhaiterais obtenir des informations concernant votre postiche semi-naturelle.",
+    "email": "À compléter",
+    "instagram": "https://instagram.com/pureora",
+    "instagramHandle": "@pureora",
+    "tiktok": "https://tiktok.com/@pureora",
+    "tiktokHandle": "@pureora"
+  },
+  "shippingNotice": {
+    "delay": "3 à 5 jours",
+    "delayIsBusinessDaysAfterConfirmation": true,
+    "delayDisclaimer": "Ce délai correspond à une estimation et non à une garantie absolue. Il peut être exprimé en jours ouvrés après validation définitive de la commande par la marque."
+  },
+  "freeShippingThreshold": null,
+  "rituel": {
+    "title": "Le Rituel Pure Ora",
+    "description": "Chaque commande vous donne accès à notre vidéo privée d'installation et à notre guide d'entretien pour vous aider à profiter pleinement de votre postiche.",
+    "pdfGuideUrl": "assets/documents/guide-entretien-pure-ora.pdf",
+    "privateVideoUrl": "",
+    "note": "Ressource distribuée principalement par e-mail après confirmation du paiement. Une URL même non répertoriée reste techniquement accessible : ne pas présenter cet accès comme totalement protégé."
+  },
+  "promoCode": {
+    "code": "",
+    "active": false,
+    "note": "Aucune remise permanente affichée par défaut. Code de bienvenue optionnel et administrable via ce fichier."
+  },
+  "legal": {
+    "companyStatus": "À compléter",
+    "address": "À compléter",
+    "siret": "À compléter",
+    "publicationManager": "À compléter",
+    "host": "À compléter",
+    "hostAddress": "À compléter",
+    "disclaimer": "Les informations légales de cette fiche doivent être complétées et validées juridiquement avant la mise en ligne définitive du site."
+  },
+  "domain": "À compléter",
+  "forms": {
+    "endpoint": "",
+    "note": "Aucun endpoint configuré. Tant que ce champ est vide, les formulaires restent validés côté navigateur mais n'envoient aucune donnée réelle."
+  },
+  "analytics": {
+    "consentRequired": true,
+    "googleAnalyticsId": "",
+    "metaPixelId": "",
+    "tiktokPixelId": ""
+  }
+}

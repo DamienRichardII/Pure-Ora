@@ -1,0 +1,62 @@
+:root {
+  /* Palette Pure Ora */
+  --pure-ora-oxblood: #2B0C0D;
+  --pure-ora-dark-wine: #4B0F12;
+  --pure-ora-burgundy: #672522;
+  --pure-ora-rust: #8D4138;
+  --pure-ora-cream: #F4ECE2;
+  --pure-ora-ivory: #E8E5DB;
+  --pure-ora-taupe: #8D6A5E;
+  --pure-ora-ink: #15120E;
+  --pure-ora-white: #FFFDFC;
+
+  /* Rôles sémantiques */
+  --bg-primary: var(--pure-ora-cream);
+  --bg-secondary: var(--pure-ora-ivory);
+  --bg-strong: var(--pure-ora-burgundy);
+  --bg-strong-alt: var(--pure-ora-dark-wine);
+  --text-on-light: var(--pure-ora-ink);
+  --text-on-dark: var(--pure-ora-cream);
+  --border-soft: rgba(141, 106, 94, 0.35);
+  --border-strong: var(--pure-ora-taupe);
+  --btn-primary-bg: var(--pure-ora-burgundy);
+  --btn-primary-bg-hover: var(--pure-ora-dark-wine);
+  --btn-primary-text: var(--pure-ora-cream);
+  --btn-secondary-bg: transparent;
+  --btn-secondary-border: var(--pure-ora-ink);
+  --link-color: var(--pure-ora-burgundy);
+  --focus-ring: var(--pure-ora-rust);
+
+  /* Typographies */
+  --font-serif: "Cormorant Garamond", "Bodoni Moda", Georgia, serif;
+  --font-sans: "Manrope", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Échelle typographique fluide */
+  --fs-h1: clamp(2.6rem, 6vw + 1rem, 6.4rem);
+  --fs-h2: clamp(2rem, 4vw + 0.5rem, 4rem);
+  --fs-h3: clamp(1.5rem, 2.4vw + 0.5rem, 2.4rem);
+  --fs-h4: clamp(1.2rem, 1.2vw + 0.6rem, 1.6rem);
+  --fs-label: clamp(0.72rem, 0.4vw + 0.6rem, 0.85rem);
+  --fs-body: clamp(1rem, 0.3vw + 0.9rem, 1.125rem);
+  --fs-small: clamp(0.85rem, 0.2vw + 0.8rem, 0.95rem);
+
+  /* Espacements */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 7rem;
+  --space-2xl: 10rem;
+
+  /* Structure */
+  --container-max: 1360px;
+  --container-padding: clamp(1.25rem, 4vw, 4rem);
+  --radius-pill: 999px;
+  --radius-md: 6px;
+  --radius-lg: 18px;
+  --shadow-soft: 0 20px 60px -30px rgba(21, 18, 14, 0.35);
+  --transition-fast: 180ms ease;
+  --transition-medium: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-slow: 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  --header-height: 88px;
+}

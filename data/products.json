@@ -1,0 +1,45 @@
+[
+  {
+    "id": "postiche-semi-naturelle",
+    "slug": "postiche-semi-naturelle-pure-ora",
+    "featured": true,
+    "status": "available",
+    "name": "Postiche semi-naturelle Pure Ora",
+    "subtitle": "L'élégance en quelques minutes",
+    "shortDescription": "Une postiche semi-naturelle légère et réutilisable, pensée pour un rendu élégant et naturel au quotidien.",
+    "longDescription": "Découvrez notre postiche semi-naturelle, conçue pour offrir un rendu élégant, naturel et facile à porter au quotidien. Grâce à son système de clips et de tirette, elle s'installe en quelques secondes et reste bien en place tout au long de la journée. Sa fibre semi-naturelle est douce, fluide et légère, pour un résultat harmonieux qui se fond parfaitement avec vos cheveux. Avec un bon entretien, elle est réutilisable pendant longtemps.",
+    "price": null,
+    "compareAtPrice": null,
+    "currency": "EUR",
+    "priceNote": "Prix à venir — sera communiqué avant l'ouverture des commandes",
+    "stockDisplay": "En précommande",
+    "sku": "PO-POSTICHE-001",
+    "images": [
+      { "src": "assets/images/products/postiche-face.jpg", "alt": "Postiche semi-naturelle Pure Ora vue de face", "ratio": "4:5" },
+      { "src": "assets/images/products/postiche-dos.jpg", "alt": "Postiche semi-naturelle Pure Ora vue de dos", "ratio": "4:5" },
+      { "src": "assets/images/products/postiche-profil.jpg", "alt": "Postiche semi-naturelle Pure Ora vue de profil", "ratio": "4:5" },
+      { "src": "assets/images/products/postiche-fibre.jpg", "alt": "Détail de la fibre semi-naturelle Pure Ora", "ratio": "1:1" },
+      { "src": "assets/images/products/postiche-clips.jpg", "alt": "Système de clips de la postiche Pure Ora", "ratio": "1:1" },
+      { "src": "assets/images/products/postiche-tirette.jpg", "alt": "Système de tirette de la postiche Pure Ora", "ratio": "1:1" }
+    ],
+    "videos": [
+      { "src": "", "poster": "assets/images/installation/poster-pose.jpg", "label": "Vidéo de pose — à intégrer" }
+    ],
+    "benefits": [
+      "Facile à poser",
+      "Effet naturel",
+      "Légère et confortable",
+      "Réutilisable",
+      "Adaptée au quotidien et aux occasions spéciales"
+    ],
+    "careInstructions": "Pour préserver sa qualité, nous recommandons de l'entretenir régulièrement avec de l'eau et une huile légère afin de conserver sa souplesse et sa brillance.",
+    "shippingInfo": "Livraison en France et à Kinshasa, RDC. Délai indicatif de 3 à 5 jours.",
+    "variants": {
+      "colors": [],
+      "lengths": [],
+      "textures": []
+    },
+    "paymentLink": "",
+    "faqIds": ["matiere", "installation", "maintien", "quotidien", "entretien", "duree"]
+  }
+]

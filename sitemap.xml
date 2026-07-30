@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.pureora.com/index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.pureora.com/boutique.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.pureora.com/produit.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.pureora.com/a-propos.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.pureora.com/installation.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.pureora.com/entretien.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.pureora.com/livraison.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.pureora.com/retours-remboursements.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.pureora.com/faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.pureora.com/avis.html</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.pureora.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.pureora.com/mentions-legales.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.pureora.com/cgv.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.pureora.com/confidentialite.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.pureora.com/cookies.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+</urlset>

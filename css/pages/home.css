@@ -1,0 +1,59 @@
+/* === Hero vidéo === */
+.hero {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--pure-ora-ink);
+  color: var(--pure-ora-cream);
+}
+.hero__media { position: absolute; inset: 0; }
+.hero__media video, .hero__media img { width: 100%; height: 100%; object-fit: cover; }
+.hero__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(21,18,14,0.15) 0%, rgba(21,18,14,0.65) 100%); }
+.hero__content { position: relative; padding-block: var(--space-lg); max-width: 760px; }
+.hero__label { color: var(--pure-ora-cream); opacity: 0.9; }
+.hero__title { margin-bottom: 1.1rem; }
+.hero__subtitle { max-width: 46ch; margin-bottom: var(--space-md); font-size: clamp(1rem, 0.5vw + 0.9rem, 1.2rem); opacity: 0.92; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+.hero__media-note {
+  position: absolute; top: var(--space-sm); right: var(--space-sm);
+  background: rgba(21,18,14,0.55); color: var(--pure-ora-cream);
+  font-size: 0.72rem; padding: 0.4rem 0.75rem; border-radius: var(--radius-pill);
+  max-width: 260px; text-align: right; z-index: 2;
+}
+
+/* === Produit signature === */
+.product-signature { display: grid; gap: var(--space-lg); }
+@media (min-width: 960px) { .product-signature { grid-template-columns: 1fr 1fr; align-items: start; } }
+.product-signature__gallery { position: sticky; top: calc(var(--header-height) + 1rem); }
+.product-signature__price-row { display: flex; align-items: baseline; gap: 0.75rem; margin-block: 1rem; }
+.product-signature__price { font-family: var(--font-serif); font-size: 2rem; }
+.product-signature__old-price { text-decoration: line-through; opacity: 0.5; }
+.product-signature__meta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: var(--space-sm); }
+.qty-selector { display: inline-flex; align-items: center; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); }
+.qty-selector button { width: 44px; height: 44px; font-weight: 700; font-size: 1.1rem; }
+.qty-selector span { min-width: 32px; text-align: center; font-weight: 700; }
+.product-signature__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-block: var(--space-sm); }
+.product-signature__reassurance { display: flex; flex-direction: column; gap: 0.5rem; margin-top: var(--space-sm); font-size: var(--fs-small); }
+.product-signature__reassurance li { display: flex; gap: 0.5rem; align-items: center; }
+
+/* === Rituel === */
+.rituel { display: grid; gap: var(--space-lg); align-items: center; }
+@media (min-width: 900px) { .rituel { grid-template-columns: 1fr 1fr; } }
+.rituel-list { display: flex; flex-direction: column; gap: 1rem; margin-block: var(--space-md); }
+.rituel-list li { display: flex; gap: 0.75rem; align-items: flex-start; }
+
+/* === Coiffures éditorial === */
+.hairstyles-grid { display: grid; gap: var(--space-sm); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 720px) { .hairstyles-grid { grid-template-columns: repeat(5, 1fr); } }
+.hairstyle-item figcaption { margin-top: 0.6rem; font-size: var(--fs-small); font-weight: 700; text-align: center; }
+
+/* === Founder section === */
+.founder-section { display: grid; gap: var(--space-lg); align-items: center; }
+@media (min-width: 900px) { .founder-section { grid-template-columns: 0.85fr 1.15fr; } }
+.founder-quote { font-family: var(--font-serif); font-style: italic; font-size: clamp(1.3rem, 1.4vw + 1rem, 2rem); margin-block: var(--space-md); }
+
+/* === Bloc newsletter === */
+.newsletter-block { text-align: center; }
+.newsletter-block .newsletter-form { justify-content: center; margin-inline: auto; }

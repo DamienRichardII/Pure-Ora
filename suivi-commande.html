@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suivi de commande — Pure Ora</title>
+<meta name="description" content="Suivez l'état de votre commande Pure Ora.">
+<link rel="canonical" href="https://www.pureora.com/suivi-commande.html">
+<link rel="icon" href="favicon/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+<div id="component-announcement"></div>
+<div id="component-header"></div>
+<main id="main-content">
+  <div class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Accueil</a> / Suivi de commande</p>
+      <h1>Suivi de commande</h1>
+      <p class="lede" style="margin-top:1rem;max-width:60ch;">Le lien de suivi de votre colis vous est transmis par e-mail dès l'expédition de votre commande.</p>
+    </div>
+  </div>
+
+  <section class="section section--white">
+    <div class="container" style="max-width:560px;">
+      <form id="order-tracking-form" data-po-form data-status-target="tracking-status" novalidate>
+        <div class="form-field">
+          <label for="order-number">Numéro de commande</label>
+          <input type="text" id="order-number" name="orderNumber" required autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="order-email">Adresse e-mail utilisée lors de la commande</label>
+          <input type="email" id="order-email" name="email" required autocomplete="email">
+        </div>
+        <input type="text" name="company" class="honeypot-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn btn-primary btn-block">Vérifier ma commande</button>
+      </form>
+      <div class="form-status" id="tracking-status" hidden></div>
+
+      <div class="dev-note" style="margin-top:2rem;">
+        <strong>Note :</strong> ce site étant une version statique, aucun suivi en temps réel n'est simulé. Le statut ci-dessous est une maquette d'affichage destinée à illustrer la mise en page — un lien de suivi transporteur réel sera intégré ultérieurement.
+      </div>
+
+      <div style="margin-top:1.5rem;border:1px solid var(--border-soft);border-radius:var(--radius-lg);padding:var(--space-md);">
+        <p class="badge" style="margin-bottom:1rem;">Maquette d'affichage</p>
+        <ol class="steps-list">
+          <li class="step-item"><span class="step-item__num"></span><p>Commande reçue</p></li>
+          <li class="step-item"><span class="step-item__num"></span><p>Paiement confirmé</p></li>
+          <li class="step-item"><span class="step-item__num"></span><p>Préparation</p></li>
+          <li class="step-item"><span class="step-item__num"></span><p>Expédiée — numéro de suivi transmis par e-mail</p></li>
+          <li class="step-item"><span class="step-item__num"></span><p>Livrée</p></li>
+        </ol>
+        <p class="form-hint" style="margin-top:1rem;">En cas de problème signalé ou de commande annulée/remboursée, notre service client vous contactera directement par e-mail.</p>
+      </div>
+
+      <p style="margin-top:1.5rem;">Besoin d'aide ? <a href="contact.html" class="text-link">Contactez notre service client</a>.</p>
+    </div>
+  </section>
+</main>
+<div id="component-footer"></div>
+<div id="component-cart-drawer"></div>
+<div id="component-cookie-banner"></div>
+<div id="whatsapp-float-container"></div>
+<script src="js/main.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/cookies.js"></script>
+<script src="js/tracking.js"></script>
+</body>
+</html>

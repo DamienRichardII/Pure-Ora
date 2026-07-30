@@ -1,0 +1,27 @@
+/* Ajustements ciblés par palier — le mobile-first est géré directement dans les fichiers de composants/pages */
+
+@media (max-width: 480px) {
+  .container { padding-inline: 1.1rem; }
+  .btn { padding: 0.95rem 1.6rem; font-size: 0.9rem; }
+  .site-header__logo { font-size: 1.35rem; }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .container { padding-inline: 1.5rem; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .section { padding-block: var(--space-lg); }
+}
+
+@media (min-width: 1440px) {
+  .container { padding-inline: 4rem; }
+}
+
+/* Empêcher tout débordement horizontal généralisé */
+img, video, iframe { max-width: 100%; }
+table { display: block; overflow-x: auto; }

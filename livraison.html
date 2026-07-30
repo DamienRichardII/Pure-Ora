@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Livraison — Pure Ora</title>
+<meta name="description" content="Informations de livraison Pure Ora : zones desservies, délais et suivi de commande.">
+<link rel="canonical" href="https://www.pureora.com/livraison.html">
+<link rel="icon" href="favicon/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/pages/legal.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+<div id="component-announcement"></div>
+<div id="component-header"></div>
+<main id="main-content">
+  <div class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Accueil</a> / Livraison</p>
+      <span class="eyebrow">Réassurance</span>
+      <h1>Livraison</h1>
+    </div>
+  </div>
+  <section class="section section--white">
+    <div class="container legal-content">
+      <h2>Zones desservies</h2>
+      <ul>
+        <li>France</li>
+        <li>Kinshasa, République démocratique du Congo</li>
+      </ul>
+
+      <h2>Délai indicatif</h2>
+      <p>Le délai indicatif de livraison est de <strong>3 à 5 jours</strong>. Ce délai correspond à une estimation en jours ouvrés après validation définitive de la commande par Pure Ora, et ne constitue pas une garantie absolue.</p>
+
+      <h2>Frais de livraison</h2>
+      <p>Les frais de livraison sont administrables par zone et affichés directement dans votre panier au moment de la commande.</p>
+      <div id="shipping-zones-table" style="margin-top:1rem;"></div>
+
+      <h2>Déroulement de la livraison</h2>
+      <ul>
+        <li>Préparation de la commande dès validation du paiement.</li>
+        <li>Envoi du colis vers l'adresse indiquée.</li>
+        <li>Transmission d'un numéro de suivi par e-mail lorsque celui-ci est disponible.</li>
+        <li>Suivi possible depuis notre <a href="suivi-commande.html" class="text-link">page de suivi de commande</a>.</li>
+      </ul>
+
+      <h2>En cas de retard</h2>
+      <p>Si votre commande dépasse le délai indiqué, contactez notre service client via WhatsApp, Instagram ou e-mail : nous reviendrons vers vous rapidement pour faire le point sur votre livraison.</p>
+
+      <h2>Coordonnées du service client</h2>
+      <p>Retrouvez tous nos moyens de contact sur notre <a href="contact.html" class="text-link">page contact</a>.</p>
+
+      <p class="to-complete" style="display:block;margin-top:1.5rem;">Le nom du transporteur n'a pas encore été communiqué et sera précisé ici avant la mise en ligne définitive.</p>
+    </div>
+  </section>
+</main>
+<div id="component-footer"></div>
+<div id="component-cart-drawer"></div>
+<div id="component-cookie-banner"></div>
+<div id="whatsapp-float-container"></div>
+<script src="js/main.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/cookies.js"></script>
+<script src="js/tracking.js"></script>
+<script>
+document.addEventListener("pureora:data-ready", () => {
+  const mount = document.getElementById("shipping-zones-table");
+  const zones = window.PureOra.shipping?.zones || [];
+  mount.innerHTML = zones.map(z => `
+    <div style="display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border-soft);">
+      <strong>${z.name}</strong>
+      <span>${z.price == null ? "Tarif communiqué lors de la commande" : window.PureOra.formatPrice(z.price)} — ${z.estimatedTime}</span>
+    </div>`).join("");
+});
+</script>
+</body>
+</html>

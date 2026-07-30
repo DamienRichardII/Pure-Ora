@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Votre panier — Pure Ora</title>
+<meta name="description" content="Consultez et modifiez votre panier Pure Ora avant de passer commande.">
+<link rel="canonical" href="https://www.pureora.com/panier.html">
+<link rel="icon" href="favicon/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/pages/cart.css">
+<link rel="stylesheet" href="css/responsive.css">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+<div id="component-announcement"></div>
+<div id="component-header"></div>
+<main id="main-content">
+  <div class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Accueil</a> / Panier</p>
+      <h1>Votre panier</h1>
+    </div>
+  </div>
+  <section class="section section--white">
+    <div class="container cart-page-grid">
+      <div id="cart-page-items"></div>
+      <aside class="cart-summary">
+        <h3 style="margin-bottom:1rem;">Récapitulatif</h3>
+        <div class="cart-summary-row"><span>Sous-total</span><span id="cart-subtotal">0,00 €</span></div>
+        <div class="shipping-zone-select">
+          <label for="shipping-zone-select" style="font-weight:700;font-size:.85rem;display:block;margin-bottom:.4rem;">Zone de livraison</label>
+          <select id="shipping-zone-select"></select>
+        </div>
+        <div class="cart-summary-row"><span>Livraison</span><span id="cart-shipping-line">Non sélectionnée</span></div>
+        <form class="promo-form" id="promo-form">
+          <input type="text" name="promoCode" placeholder="Code promotionnel" aria-label="Code promotionnel">
+          <button type="submit" class="btn btn-secondary">Appliquer</button>
+        </form>
+        <p class="form-status form-status--info" id="promo-status" hidden></p>
+        <div class="cart-summary-row total"><span>Total estimé</span><span id="cart-total">0,00 €</span></div>
+        <a href="commande.html" class="btn btn-primary btn-block" id="go-to-checkout" style="margin-top:1rem;">Passer commande</a>
+        <p class="form-hint" style="margin-top:.75rem;">L'estimation finale de livraison sera confirmée avant le paiement.</p>
+      </aside>
+    </div>
+  </section>
+</main>
+<div id="component-footer"></div>
+<div id="component-cart-drawer"></div>
+<div id="component-cookie-banner"></div>
+<div id="whatsapp-float-container"></div>
+<script src="js/main.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/cookies.js"></script>
+<script src="js/tracking.js"></script>
+</body>
+</html>

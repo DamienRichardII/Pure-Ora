@@ -1,0 +1,68 @@
+[
+  {
+    "id": "matiere",
+    "question": "La postiche est-elle en cheveux naturels ?",
+    "answer": "Notre postiche est fabriquée en fibres semi-naturelles de qualité, sélectionnées pour offrir un rendu naturel, une belle fluidité et un excellent confort.",
+    "category": "produit"
+  },
+  {
+    "id": "installation",
+    "question": "Est-elle facile à installer ?",
+    "answer": "Oui. Grâce à son système de clips et de tirette, elle se fixe en quelques minutes, même si vous débutez.",
+    "category": "produit"
+  },
+  {
+    "id": "maintien",
+    "question": "La postiche tient-elle bien ?",
+    "answer": "Oui, une fois correctement fixée, elle reste bien en place tout au long de la journée.",
+    "category": "produit"
+  },
+  {
+    "id": "quotidien",
+    "question": "Puis-je la porter tous les jours ?",
+    "answer": "Absolument. Elle est conçue pour un usage quotidien comme pour les occasions spéciales.",
+    "category": "produit"
+  },
+  {
+    "id": "entretien",
+    "question": "Comment entretenir ma postiche ?",
+    "answer": "Nous recommandons de l'entretenir régulièrement avec de l'eau et une huile légère afin de conserver sa douceur et sa fluidité. Manipulez-la avec soin et rangez-la dans un endroit sec lorsque vous ne la portez pas.",
+    "category": "entretien"
+  },
+  {
+    "id": "duree",
+    "question": "Combien de temps dure-t-elle ?",
+    "answer": "Avec un bon entretien, votre postiche peut être réutilisée pendant une longue période.",
+    "category": "entretien"
+  },
+  {
+    "id": "livraison",
+    "question": "Livrez-vous à l'international ?",
+    "answer": "Nous livrons actuellement en France ainsi qu'à Kinshasa, en République démocratique du Congo. Les délais et frais de livraison sont indiqués au moment de la commande.",
+    "category": "livraison"
+  },
+  {
+    "id": "paiement",
+    "question": "Quels sont les moyens de paiement acceptés ?",
+    "answer": "Nous acceptons les paiements sécurisés proposés lors de la validation de votre commande.",
+    "category": "commande"
+  },
+  {
+    "id": "retour",
+    "question": "Puis-je retourner ma commande ?",
+    "answer": "Pour des raisons d'hygiène, les postiches ne sont ni reprises ni échangées après ouverture ou utilisation. Si vous recevez un article défectueux ou une erreur de commande, contactez-nous dans les 48 heures suivant la réception avec des photos afin que nous puissions trouver une solution.",
+    "category": "retours"
+  },
+  {
+    "id": "contact",
+    "question": "Comment contacter le service client ?",
+    "answer": "Vous pouvez nous contacter via WhatsApp, Instagram ou par e-mail. Nous nous engageons à vous répondre dans les meilleurs délais.",
+    "category": "contact"
+  },
+  {
+    "id": "sommeil",
+    "question": "Puis-je dormir avec ma postiche ?",
+    "answer": "Nous vous déconseillons de dormir avec votre postiche. Pour préserver sa qualité, sa forme et prolonger sa durée de vie, retirez-la avant de vous coucher et rangez-la dans un endroit propre et sec.",
+    "category": "entretien"
+  }
+]

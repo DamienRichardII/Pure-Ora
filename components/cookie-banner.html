@@ -1,0 +1,26 @@
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Gestion des cookies">
+  <p>Nous utilisons des cookies pour améliorer votre expérience sur ce site. Vous pouvez accepter, refuser ou personnaliser vos préférences à tout moment.</p>
+  <div class="cookie-prefs" id="cookie-prefs">
+    <div class="cookie-prefs__row">
+      <label for="cookie-necessary">Cookies nécessaires (toujours actifs)</label>
+      <input type="checkbox" id="cookie-necessary" checked disabled>
+    </div>
+    <div class="cookie-prefs__row">
+      <label for="cookie-analytics">Mesure d'audience</label>
+      <input type="checkbox" id="cookie-analytics">
+    </div>
+    <div class="cookie-prefs__row">
+      <label for="cookie-marketing">Publicité personnalisée</label>
+      <input type="checkbox" id="cookie-marketing">
+    </div>
+  </div>
+  <div class="cookie-banner__actions">
+    <button type="button" class="btn btn-primary" id="cookie-accept-all">Accepter</button>
+    <button type="button" class="btn btn-secondary" id="cookie-refuse-all">Refuser</button>
+    <button type="button" class="btn btn-ghost" id="cookie-customize" style="color:var(--pure-ora-cream);">Personnaliser</button>
+    <button type="button" class="btn btn-primary" id="cookie-save-prefs" hidden>Enregistrer mes préférences</button>
+  </div>
+</div>
+<button type="button" class="cookie-reopen" id="cookie-reopen" aria-label="Gérer les cookies">
+  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="10" cy="15" r="1"/></svg>
+</button>
