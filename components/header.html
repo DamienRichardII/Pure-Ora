@@ -6,10 +6,15 @@
       <ul>
         <li><a href="index.html" data-nav="index">Accueil</a></li>
         <li><a href="boutique.html" data-nav="boutique">Boutique</a></li>
+        <li><a href="boutique.html?categorie=postiches" data-nav="postiches">Postiches</a></li>
+        <li><a href="wigs.html" data-nav="wigs">Wigs</a></li>
+        <li><a href="soins-capillaires.html" data-nav="soins-capillaires">Soins capillaires</a></li>
+        <li><a href="complements-alimentaires.html" data-nav="complements-alimentaires">Bien-être</a></li>
         <li><a href="a-propos.html" data-nav="a-propos">À propos</a></li>
         <li><a href="installation.html" data-nav="conseils">Conseils</a></li>
         <li><a href="faq.html" data-nav="faq">FAQ</a></li>
         <li><a href="contact.html" data-nav="contact">Contact</a></li>
+        <li><a href="panier.html" data-nav="panier">Panier</a></li>
       </ul>
     </nav>
 
@@ -38,14 +43,28 @@
   <ul class="mobile-menu__list">
     <li><a href="index.html">Accueil</a></li>
     <li><a href="boutique.html">Boutique</a></li>
+    <li class="mobile-menu__group">
+      <button type="button" class="mobile-menu__group-toggle" id="univers-toggle" aria-expanded="false" aria-controls="univers-submenu">
+        Nos univers
+        <span class="mobile-menu__group-icon" aria-hidden="true">+</span>
+      </button>
+      <ul class="mobile-menu__submenu" id="univers-submenu">
+        <li><a href="boutique.html?categorie=postiches">Postiches</a></li>
+        <li><a href="wigs.html">Wigs</a></li>
+        <li><a href="soins-capillaires.html">Soins capillaires</a></li>
+        <li><a href="complements-alimentaires.html">Compléments alimentaires</a></li>
+        <li><a href="accessoires.html">Accessoires</a></li>
+      </ul>
+    </li>
     <li><a href="a-propos.html">À propos</a></li>
     <li><a href="installation.html">Guide d'installation</a></li>
     <li><a href="entretien.html">Guide d'entretien</a></li>
+    <li><a href="journal.html">Le Journal Pure Ora</a></li>
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="mobile-menu__foot">
-    <a href="boutique.html" class="btn btn-primary btn-block">Commander maintenant</a>
+    <a href="boutique.html" class="btn btn-primary btn-block">Découvrir nos produits</a>
     <a href="panier.html" class="btn btn-secondary btn-block">Voir mon panier</a>
   </div>
 </div>

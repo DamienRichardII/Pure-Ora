@@ -41,14 +41,18 @@
 }
 .site-header__nav ul {
   display: flex;
-  gap: clamp(1rem, 2vw, 2.2rem);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: clamp(0.65rem, 1.1vw, 1.5rem);
+  row-gap: 0.5rem;
 }
 .site-header__nav a {
-  font-size: 0.92rem;
+  font-size: clamp(0.78rem, 0.6vw + 0.6rem, 0.92rem);
   font-weight: 600;
   letter-spacing: 0.01em;
   position: relative;
   padding-block: 0.3rem;
+  white-space: nowrap;
 }
 .site-header__nav a::after {
   content: "";
@@ -110,6 +114,28 @@
 .mobile-menu__list a { font-family: var(--font-serif); font-size: 2rem; }
 .mobile-menu__foot { margin-top: auto; padding-top: var(--space-lg); display: flex; flex-direction: column; gap: 0.75rem; }
 body.menu-open { overflow: hidden; }
+
+.mobile-menu__group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  text-align: left;
+}
+.mobile-menu__group-icon { font-size: 1.4rem; transition: transform var(--transition-fast); color: var(--pure-ora-rust); }
+.mobile-menu__group-toggle[aria-expanded="true"] .mobile-menu__group-icon { transform: rotate(45deg); }
+.mobile-menu__submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-medium);
+}
+.mobile-menu__submenu.is-open { grid-template-rows: 1fr; }
+.mobile-menu__submenu { overflow: hidden; }
+.mobile-menu__submenu > li { overflow: hidden; min-height: 0; }
+.mobile-menu__submenu li a { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; padding-block: 0.6rem; display: block; }
+.mobile-menu__submenu li:first-child a { padding-top: 0.9rem; }
 
 /* === Panier latéral === */
 .cart-drawer {
@@ -359,7 +385,8 @@ body.menu-open { overflow: hidden; }
 
 /* === Footer === */
 .site-footer { background: var(--pure-ora-ink); color: var(--pure-ora-cream); padding-block: var(--space-xl) var(--space-md); }
-.footer-grid { display: grid; gap: var(--space-lg); grid-template-columns: 1.3fr repeat(3, 1fr); }
+.footer-grid { display: grid; gap: var(--space-lg); grid-template-columns: 1.4fr repeat(4, 1fr); }
+@media (max-width: 1100px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
 .footer-logo { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; margin-bottom: 0.75rem; }

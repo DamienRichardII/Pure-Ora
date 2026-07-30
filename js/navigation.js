@@ -38,6 +38,16 @@ function initMobileMenu() {
   });
 }
 
+function initUniversSubmenu() {
+  const toggle = document.getElementById("univers-toggle");
+  const submenu = document.getElementById("univers-submenu");
+  if (!toggle || !submenu) return;
+  toggle.addEventListener("click", () => {
+    const isOpen = submenu.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
 function markActiveNav() {
   const current = (location.pathname.split("/").pop() || "index.html").replace(/^$/, "index.html");
   document.querySelectorAll(".site-header__nav a, .mobile-menu__list a").forEach((a) => {
@@ -56,6 +66,7 @@ function toggleSearchVisibility() {
 document.addEventListener("pureora:components-ready", () => {
   initHeaderScroll();
   initMobileMenu();
+  initUniversSubmenu();
   markActiveNav();
   toggleSearchVisibility();
 });

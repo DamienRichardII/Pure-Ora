@@ -2,8 +2,11 @@
   "brand": {
     "name": "Pure Ora",
     "founder": "Sheila Mavinga",
+    "signature": "L'aura à l'état pur.",
     "tagline": "L'élégance en quelques minutes.",
-    "shortDescription": "Postiches semi-naturelles faciles à installer, élégantes, légères et réutilisables.",
+    "positioning": "L'univers de la beauté capillaire et du bien-être.",
+    "shortDescription": "Postiches, wigs, soins et compléments soigneusement sélectionnés pour sublimer votre beauté et prendre soin de vous.",
+    "footerDescription": "Pure Ora — L'univers de la beauté capillaire et du bien-être. Postiches, wigs, soins et essentiels soigneusement sélectionnés.",
     "logoText": "Pure Ora"
   },
   "announcementBar": {

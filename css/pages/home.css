@@ -57,3 +57,74 @@
 /* === Bloc newsletter === */
 .newsletter-block { text-align: center; }
 .newsletter-block .newsletter-form { justify-content: center; margin-inline: auto; }
+
+/* === Hero : indication éditoriale premier lancement === */
+.hero__editorial-note {
+  margin-top: 1.25rem;
+  font-size: var(--fs-small);
+  opacity: 0.85;
+  border-top: 1px solid rgba(244,236,226,0.3);
+  padding-top: 0.85rem;
+  display: inline-block;
+}
+
+/* === Chapitre 01 === */
+.chapter-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--pure-ora-rust);
+}
+
+/* === Cartes "Univers Pure Ora" === */
+.universe-grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 720px) { .universe-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .universe-grid { grid-template-columns: repeat(5, 1fr); } }
+.universe-grid--compact { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 720px) { .universe-grid--compact { grid-template-columns: repeat(4, 1fr); } }
+
+.universe-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+.universe-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+.universe-card__num {
+  position: absolute;
+  top: 0.75rem; left: 0.75rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--pure-ora-white);
+  background: rgba(21,18,14,0.45);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.universe-card__media { border-radius: 0; }
+.universe-card__body { padding: var(--space-sm) var(--space-sm) var(--space-md); display: flex; flex-direction: column; gap: 0.4rem; }
+.universe-card__status { align-self: flex-start; font-size: 0.68rem; }
+.universe-card.is-available .universe-card__status { background: var(--pure-ora-burgundy); color: var(--pure-ora-cream); border-color: var(--pure-ora-burgundy); }
+.universe-card__title { font-family: var(--font-serif); font-size: 1.4rem; }
+.universe-card__text { font-size: var(--fs-small); opacity: 0.85; }
+
+/* === Section vision (fond foncé, centrée) === */
+.vision-section { text-align: center; }
+
+/* === Journal Pure Ora === */
+.journal-grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(1, 1fr); }
+@media (min-width: 720px) { .journal-grid { grid-template-columns: repeat(3, 1fr); } }
+.journal-card { display: block; }
+.journal-card h3 { font-family: var(--font-serif); font-size: 1.3rem; margin-top: 0.25rem; }
+.journal-card .media-placeholder { border-radius: var(--radius-md); }

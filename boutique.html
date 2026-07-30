@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/animations.css">
 <link rel="stylesheet" href="css/pages/shop.css">
+<link rel="stylesheet" href="css/pages/home.css">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -29,8 +30,8 @@
     <div class="container">
       <p class="breadcrumb"><a href="index.html">Accueil</a> / Boutique</p>
       <span class="eyebrow">Boutique</span>
-      <h1>La collection Pure Ora</h1>
-      <p class="lede" style="margin-top:1rem;max-width:60ch;">Une première postiche signature, pensée pour être la première d'une collection amenée à s'enrichir.</p>
+      <h1>Votre beauté, votre aura, votre rituel.</h1>
+      <p class="lede" style="margin-top:1rem;max-width:60ch;">Retrouvez les essentiels Pure Ora dédiés à la beauté capillaire et au bien-être.</p>
     </div>
   </div>
   <section class="section section--white">
@@ -39,14 +40,26 @@
         <div class="shop-search">
           <input type="search" id="shop-search-input" placeholder="Rechercher un produit" aria-label="Rechercher un produit">
         </div>
-        <div class="shop-filters" role="group" aria-label="Filtrer les produits">
-          <button type="button" class="filter-chip" data-category="all" aria-pressed="true">Tous les produits</button>
+        <div class="shop-filters" id="shop-filters" role="group" aria-label="Filtrer les produits">
+          <button type="button" class="filter-chip" data-category-id="all" data-slug="all" aria-pressed="true">Tous les produits</button>
         </div>
       </div>
       <div class="shop-grid" id="shop-grid">
         <div class="skeleton ratio-4x5"></div>
         <div class="skeleton ratio-4x5"></div>
       </div>
+      <p class="shop-empty" id="shop-empty-message" hidden>Aucun produit ne correspond à votre recherche pour le moment.</p>
+    </div>
+  </section>
+
+  <section class="section section--ivory">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">À venir</span>
+        <h2>Prochainement dans la boutique</h2>
+        <p class="lede" style="margin-top:.75rem;">D'autres univers rejoindront bientôt la sélection Pure Ora.</p>
+      </div>
+      <div class="universe-grid universe-grid--compact" id="boutique-coming-soon"></div>
     </div>
   </section>
 </main>

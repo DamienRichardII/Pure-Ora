@@ -11,9 +11,17 @@
 
 ## Contenu de marque
 - [ ] Histoire de Sheila Mavinga rédigée et intégrée (`a-propos.html`, section À propos de l'accueil)
+- [ ] Texte de la section "Plus qu'une coiffure, un rituel pour soi" validé ou remplacé (`index.html`)
 - [ ] Avis clients authentiques ajoutés et validés (`data/reviews.json`, `"published": true`)
 - [ ] Portrait(s) de la fondatrice ajoutés
 - [ ] Galerie éditoriale et coiffures finalisées ou retirées si non confirmées
+
+## Futurs univers de marque
+- [ ] Date ou fenêtre de lancement des wigs communiquée (`wigs.html`)
+- [ ] Date ou fenêtre de lancement des soins capillaires communiquée (`soins-capillaires.html`)
+- [ ] Références et informations réglementaires des compléments alimentaires fournies avant toute mise en vente (`complements-alimentaires.html`)
+- [ ] Date ou fenêtre de lancement des accessoires communiquée (`accessoires.html`)
+- [ ] Premiers articles réels du Journal Pure Ora ajoutés ou existants validés (`journal.html`)
 
 ## Livraison
 - [ ] Frais de livraison France ajoutés (`data/shipping.json`)

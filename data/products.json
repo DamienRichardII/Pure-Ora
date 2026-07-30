@@ -2,6 +2,11 @@
   {
     "id": "postiche-semi-naturelle",
     "slug": "postiche-semi-naturelle-pure-ora",
+    "categoryId": "postiches",
+    "collection": "Premier lancement",
+    "tags": ["postiche", "premier-lancement", "produit-signature"],
+    "badge": "Notre premier lancement",
+    "launchDate": "2026",
     "featured": true,
     "status": "available",
     "name": "Postiche semi-naturelle Pure Ora",
@@ -67,6 +72,7 @@
       "lengths": [],
       "textures": []
     },
+    "characteristics": [],
     "paymentLink": "",
     "faqIds": [
       "matiere",

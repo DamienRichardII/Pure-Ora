@@ -42,12 +42,13 @@ window.PureOra.loadJSON = loadJSON;
 async function bootstrap() {
   await Promise.all(COMPONENT_TARGETS.map((c) => loadComponent(c.id, c.src)));
 
-  const [settings, products, shipping, faq, reviewsData] = await Promise.all([
+  const [settings, products, shipping, faq, reviewsData, categories] = await Promise.all([
     loadJSON("data/settings.json"),
     loadJSON("data/products.json"),
     loadJSON("data/shipping.json"),
     loadJSON("data/faq.json"),
     loadJSON("data/reviews.json"),
+    loadJSON("data/categories.json"),
   ]);
 
   window.PureOra.settings = settings || {};
@@ -55,6 +56,7 @@ async function bootstrap() {
   window.PureOra.shipping = shipping || { zones: [] };
   window.PureOra.faq = faq || [];
   window.PureOra.reviewsData = reviewsData || { published: false, reviews: [] };
+  window.PureOra.categories = categories || [];
 
   document.dispatchEvent(new CustomEvent("pureora:data-ready"));
 

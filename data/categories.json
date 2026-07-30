@@ -1,0 +1,52 @@
+[
+  {
+    "id": "postiches",
+    "name": "Postiches",
+    "slug": "postiches",
+    "page": "boutique.html",
+    "description": "Des solutions faciles à porter pour transformer votre coiffure en quelques minutes.",
+    "status": "available",
+    "statusLabel": "Disponible",
+    "cta": "Découvrir"
+  },
+  {
+    "id": "wigs",
+    "name": "Wigs",
+    "slug": "wigs",
+    "page": "wigs.html",
+    "description": "Des modèles sélectionnés pour varier les styles avec élégance et confiance.",
+    "status": "coming-soon",
+    "statusLabel": "Prochainement",
+    "cta": "Être informée"
+  },
+  {
+    "id": "hair-care",
+    "name": "Soins capillaires",
+    "slug": "soins-capillaires",
+    "page": "soins-capillaires.html",
+    "description": "Une sélection pensée pour accompagner votre routine et prendre soin de vos cheveux.",
+    "status": "coming-soon",
+    "statusLabel": "Prochainement",
+    "cta": "Être informée"
+  },
+  {
+    "id": "wellness",
+    "name": "Compléments alimentaires",
+    "slug": "complements-alimentaires",
+    "page": "complements-alimentaires.html",
+    "description": "Des produits dédiés au bien-être et intégrés dans une approche globale du soin de soi.",
+    "status": "coming-soon",
+    "statusLabel": "Prochainement",
+    "cta": "Être informée"
+  },
+  {
+    "id": "accessories",
+    "name": "Accessoires",
+    "slug": "accessoires",
+    "page": "accessoires.html",
+    "description": "Les essentiels nécessaires pour installer, entretenir et conserver vos produits Pure Ora.",
+    "status": "coming-soon",
+    "statusLabel": "Prochainement",
+    "cta": "Être informée"
+  }
+]

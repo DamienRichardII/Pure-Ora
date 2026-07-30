@@ -43,14 +43,21 @@ pure-ora/
 │   entretien.html, livraison.html, retours-remboursements.html, faq.html,
 │   avis.html, contact.html, mentions-legales.html, cgv.html,
 │   confidentialite.html, cookies.html, 404.html
+├── wigs.html, soins-capillaires.html, complements-alimentaires.html,
+│   accessoires.html (pages "Prochainement" des futurs univers de marque)
+├── journal.html + journal-entretien-postiche.html, journal-pose-postiche.html,
+│   journal-routine-beaute.html (Le Journal Pure Ora — contenus éditoriaux)
 ├── css/ (variables, reset, global, components, animations, responsive, pages/*)
 ├── js/ (main, navigation, animations, products, product-page, cart, checkout,
 │        filters, reviews, faq, forms, tracking, cookies)
-├── data/ (products.json, settings.json, faq.json, reviews.json, shipping.json)
+├── data/ (products.json, settings.json, faq.json, reviews.json, shipping.json,
+│          categories.json)
 ├── components/ (header, footer, announcement-bar, cart-drawer, cookie-banner)
 ├── assets/ (images, videos, icons, documents, fonts)
 ├── favicon/, robots.txt, sitemap.xml, manifest.json, vercel.json
 ```
+
+Pure Ora est positionnée comme une marque globale de beauté capillaire et de bien-être (signature : « L'aura à l'état pur. »). La postiche semi-naturelle est son premier lancement ; `data/categories.json` centralise les futures catégories (wigs, soins capillaires, compléments alimentaires, accessoires), chacune avec sa page "Prochainement" dédiée et un formulaire d'alerte au lancement. Pour ajouter un produit dans une catégorie existante, renseignez `categoryId` dans `data/products.json` avec l'`id` correspondant de `categories.json`.
 
 ## Modifier le contenu du site (sans toucher au code)
 
