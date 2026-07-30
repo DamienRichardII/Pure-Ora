@@ -171,7 +171,7 @@ function updateCartPageSummary() {
     if (!zone) {
       shippingEl.textContent = "Sélectionnez votre zone de livraison";
     } else if (zone.price === null || zone.price === undefined) {
-      shippingEl.textContent = "Tarif de livraison communiqué lors de la commande";
+      shippingEl.textContent = zone.note || "Tarif de livraison communiqué lors de la commande";
     } else {
       shippingEl.textContent = formatPrice(zone.price);
     }

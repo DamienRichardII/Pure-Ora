@@ -29,7 +29,7 @@ function renderCheckoutSummary() {
   const zoneId = window.PureOraCart.getShippingZone();
   const zone = zones.find((z) => z.id === zoneId);
   const shippingEl = document.getElementById("checkout-shipping");
-  if (shippingEl) shippingEl.textContent = zone ? (zone.price == null ? "Communiqué lors de la commande" : window.PureOra.formatPrice(zone.price)) : "Non sélectionnée";
+  if (shippingEl) shippingEl.textContent = zone ? (zone.price == null ? (zone.note || "Communiqué lors de la commande") : window.PureOra.formatPrice(zone.price)) : "Non sélectionnée";
 
   const totalEl = document.getElementById("checkout-total");
   if (totalEl) totalEl.textContent = (hasUnpriced || !zone || zone.price == null) ? "Communiqué lors de la commande" : window.PureOra.formatPrice(subtotal + zone.price);

@@ -80,7 +80,7 @@ document.addEventListener("pureora:data-ready", () => {
   mount.innerHTML = zones.map(z => `
     <div style="display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border-soft);">
       <strong>${z.name}</strong>
-      <span>${z.price == null ? "Tarif communiqué lors de la commande" : window.PureOra.formatPrice(z.price)} — ${z.estimatedTime}</span>
+      <span>${z.price == null ? (z.note || "Tarif communiqué lors de la commande") : window.PureOra.formatPrice(z.price)} — ${z.estimatedTime}</span>
     </div>`).join("");
 });
 </script>
