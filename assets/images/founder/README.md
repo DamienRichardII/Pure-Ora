@@ -1,3 +1,3 @@
 # Dossier founder/
 
-Portraits de Sheila Mavinga, fondatrice de Pure Ora. Ratio recommandé : 4:5.
+Portraits de Sheilla Mavinga, fondatrice de Pure Ora. Ratio recommandé : 4:5.

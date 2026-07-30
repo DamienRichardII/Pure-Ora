@@ -1,6 +1,6 @@
 # Pure Ora — Site e-commerce statique
 
-Site e-commerce éditorial de la marque **Pure Ora**, fondée par Sheila Mavinga. Vente de postiches semi-naturelles faciles à installer.
+Site e-commerce éditorial de la marque **Pure Ora**, fondée par Sheilla Mavinga. Vente de postiches semi-naturelles faciles à installer.
 
 Site 100% statique : **HTML5, CSS3, JavaScript natif (ES6)**. Aucun framework, aucune base de données. Données centralisées dans des fichiers JSON (`data/`).
 

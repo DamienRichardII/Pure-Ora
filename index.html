@@ -34,7 +34,7 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Pure Ora",
-  "founder": "Sheila Mavinga",
+  "founder": "Sheilla Mavinga",
   "description": "L'univers de la beauté capillaire et du bien-être : postiches, wigs, soins et compléments soigneusement sélectionnés.",
   "url": "https://www.pureora.com/",
   "sameAs": ["https://instagram.com/pureora", "https://tiktok.com/@pureora"]
@@ -54,7 +54,28 @@
   "@type": "Product",
   "name": "Postiche semi-naturelle Pure Ora",
   "brand": { "@type": "Brand", "name": "Pure Ora" },
-  "description": "Postiche semi-naturelle légère, facile à installer et réutilisable, conçue pour un rendu naturel au quotidien. Premier lancement de l'univers Pure Ora."
+  "description": "Postiche semi-naturelle légère, facile à installer et réutilisable, conçue pour un rendu naturel au quotidien. Premier lancement de l'univers Pure Ora.",
+  "offers": [
+    {
+      "@type": "Offer",
+      "url": "https://www.pureora.com/produit.html?slug=postiche-semi-naturelle-pure-ora",
+      "priceCurrency": "EUR",
+      "price": "35",
+      "availability": "https://schema.org/InStock",
+      "eligibleRegion": [
+        { "@type": "Country", "name": "France" },
+        { "@type": "Country", "name": "BE" }
+      ]
+    },
+    {
+      "@type": "Offer",
+      "url": "https://www.pureora.com/produit.html?slug=postiche-semi-naturelle-pure-ora",
+      "priceCurrency": "USD",
+      "price": "45",
+      "availability": "https://schema.org/InStock",
+      "eligibleRegion": { "@type": "Country", "name": "CD" }
+    }
+  ]
 }
 </script>
 </head>
@@ -69,11 +90,11 @@
   <section class="hero">
     <div class="hero__media">
       <video poster="assets/images/hero/hero-poster.jpg" muted loop playsinline preload="none" aria-hidden="true">
-        <!-- Vidéo hero à intégrer : Sheila Mavinga portant la première postiche Pure Ora (16:9 desktop / 9:16 mobile) -->
+        <!-- Vidéo hero à intégrer : Sheilla Mavinga portant la première postiche Pure Ora (16:9 desktop / 9:16 mobile) -->
         <source src="assets/videos/hero-desktop.mp4" type="video/mp4">
       </video>
-      <img src="assets/images/hero/hero-poster.jpg" alt="Sheila Mavinga portant la première postiche Pure Ora" loading="eager"
-        onerror="this.parentElement.innerHTML='&lt;div class=&quot;media-placeholder ratio-16x9&quot; style=&quot;height:100%;border-radius:0;&quot;&gt;&lt;span class=&quot;media-placeholder__label&quot;&gt;Emplacement vidéo hero&lt;span&gt;Vidéo de Sheila Mavinga portant la première postiche — à intégrer depuis le back-office (assets/videos/hero-desktop.mp4)&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;'">
+      <img src="assets/images/hero/hero-poster.jpg" alt="Sheilla Mavinga portant la première postiche Pure Ora" loading="eager"
+        onerror="this.parentElement.innerHTML='&lt;div class=&quot;media-placeholder ratio-16x9&quot; style=&quot;height:100%;border-radius:0;&quot;&gt;&lt;span class=&quot;media-placeholder__label&quot;&gt;Emplacement vidéo hero&lt;span&gt;Vidéo de Sheilla Mavinga portant la première postiche — à intégrer depuis le back-office (assets/videos/hero-desktop.mp4)&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;'">
       <div class="hero__overlay"></div>
     </div>
     <div class="hero__media-note">Emplacement vidéo premium — média final à intégrer</div>
@@ -113,7 +134,7 @@
       <span class="eyebrow" style="color:var(--pure-ora-cream);opacity:.8;">Notre vision</span>
       <h2 data-reveal>Plus qu'une coiffure, un rituel pour soi.</h2>
       <p style="margin-top:1.25rem;opacity:.92;font-size:clamp(1rem,.4vw + 1rem,1.2rem);">Pure Ora est née d'une vision simple : permettre à chaque femme de prendre soin de son apparence, de ses cheveux et de son bien-être à travers des produits soigneusement sélectionnés. De la beauté capillaire aux essentiels du quotidien, chaque produit Pure Ora est pensé pour vous aider à vous sentir élégante, confiante et pleinement vous-même.</p>
-      <p class="form-hint" style="margin-top:1rem;color:var(--pure-ora-cream);opacity:.6;">Texte temporaire, amené à être complété par l'histoire définitive de Sheila.</p>
+      <p class="form-hint" style="margin-top:1rem;color:var(--pure-ora-cream);opacity:.6;">Texte temporaire, amené à être complété par l'histoire définitive de Sheilla.</p>
     </div>
   </section>
 
@@ -133,10 +154,7 @@
           <p class="lede" style="margin-bottom:1rem;">Découvrez notre postiche semi-naturelle, conçue pour offrir un rendu élégant, naturel et facile à porter au quotidien.</p>
           <p style="margin-bottom:1rem;">Grâce à son système de clips et de tirette, elle s'installe en quelques secondes et reste bien en place tout au long de la journée. Sa fibre semi-naturelle est douce, fluide et légère, pour un résultat harmonieux qui se fond parfaitement avec vos cheveux. Avec un bon entretien, elle est réutilisable pendant longtemps.</p>
 
-          <div class="product-signature__price-row">
-            <span class="product-signature__price" data-product-price>Prix à venir</span>
-            <span class="product-signature__old-price" data-product-old-price hidden></span>
-          </div>
+          <div id="zone-selector-home" data-zone-selector></div>
           <span class="badge" data-product-stock>En précommande</span>
 
           <div id="variant-color-home" class="variant-group" hidden></div>
@@ -157,7 +175,7 @@
           </div>
 
           <ul class="product-signature__reassurance">
-            <li>✨ Livraison en France et à Kinshasa, RDC</li>
+            <li>✨ Livraison en France, en Belgique et à Kinshasa, RDC</li>
             <li>🔒 Paiement sécurisé</li>
             <li>↩️ Assistance sous 48h en cas de problème signalé</li>
           </ul>
@@ -212,7 +230,7 @@
         <div class="benefit-item" data-reveal>
           <svg class="benefit-item__icon" viewBox="0 0 24 24"><rect x="1" y="7" width="15" height="10" rx="1"/><path d="M16 10h3l3 3v4h-6"/><circle cx="6" cy="19" r="1.6"/><circle cx="18" cy="19" r="1.6"/></svg>
           <span class="benefit-item__title">Livraison</span>
-          <span class="benefit-item__text">En France et à Kinshasa, RDC.</span>
+          <span class="benefit-item__text">En France, en Belgique et à Kinshasa, RDC.</span>
         </div>
       </div>
 
@@ -240,7 +258,7 @@
         <h2 data-reveal>Posée en quelques minutes. Portée toute la journée.</h2>
       </div>
       <div style="display:grid;gap:var(--space-lg);" class="founder-section">
-        <div class="media-placeholder ratio-16x9" data-reveal><span class="media-placeholder__label">Vidéo de pose<span>Sheila Mavinga réalisant la pose — à intégrer</span></span></div>
+        <div class="media-placeholder ratio-16x9" data-reveal><span class="media-placeholder__label">Vidéo de pose<span>Sheilla Mavinga réalisant la pose — à intégrer</span></span></div>
         <ol class="steps-list" data-reveal>
           <li class="step-item"><span class="step-item__num"></span><p>Préparer et attacher les cheveux.</p></li>
           <li class="step-item"><span class="step-item__num"></span><p>Positionner la postiche.</p></li>
@@ -296,7 +314,7 @@
           <ul class="rituel-list">
             <li>📄 Guide PDF d'installation et d'entretien</li>
             <li>🎥 Vidéo privée expliquant la pose</li>
-            <li>💌 Conseils personnels de Sheila</li>
+            <li>💌 Conseils personnels de Sheilla</li>
             <li>✉️ Accès envoyé automatiquement après confirmation du paiement</li>
           </ul>
           <a href="entretien.html" class="btn btn-secondary">Découvrir le guide d'entretien</a>
@@ -309,14 +327,14 @@
   <!-- ================= SECTION 9 — À PROPOS DE SHEILA ================= -->
   <section class="section section--ivory">
     <div class="container">
-      <div class="dev-note"><strong>Contenu temporaire :</strong> l'histoire complète de Sheila n'a pas encore été transmise par la marque. Le texte ci-dessous est un espace réservé administrable, à remplacer avant mise en ligne.</div>
+      <div class="dev-note"><strong>Contenu temporaire :</strong> l'histoire complète de Sheilla n'a pas encore été transmise par la marque. Le texte ci-dessous est un espace réservé administrable, à remplacer avant mise en ligne.</div>
       <div class="founder-section">
-        <div class="media-placeholder ratio-4x5" data-reveal><span class="media-placeholder__label">Portrait de Sheila Mavinga<span>Photo à intégrer</span></span></div>
+        <div class="media-placeholder ratio-4x5" data-reveal><span class="media-placeholder__label">Portrait de Sheilla Mavinga<span>Photo à intégrer</span></span></div>
         <div data-reveal>
           <span class="eyebrow">La fondatrice</span>
           <h2>Une beauté simple, pensée par une femme pour les femmes.</h2>
           <p class="founder-quote">« Pure Ora est né du désir d'offrir aux femmes une solution élégante, rapide et rassurante pour prendre soin de leur image au quotidien. »</p>
-          <p style="opacity:.85;">Sheila Mavinga a fondé Pure Ora pour répondre à un besoin qu'elle connaît intimement : obtenir un rendu soigné sans procédure compliquée. Son histoire complète, sa vision de la beauté et ses engagements envers ses clientes seront présentés en détail sur cette page dès que ces éléments auront été communiqués.</p>
+          <p style="opacity:.85;">Sheilla Mavinga a fondé Pure Ora pour répondre à un besoin qu'elle connaît intimement : obtenir un rendu soigné sans procédure compliquée. Son histoire complète, sa vision de la beauté et ses engagements envers ses clientes seront présentés en détail sur cette page dès que ces éléments auront été communiqués.</p>
           <a href="a-propos.html" class="btn btn-secondary">Découvrir l'histoire de Pure Ora</a>
         </div>
       </div>
@@ -396,7 +414,7 @@
         <h2 data-reveal>Commander en toute confiance</h2>
       </div>
       <div class="reassurance-strip">
-        <div class="reassurance-item"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M3 21h18"/><path d="M5 21V9l7-6 7 6v12"/></svg><div><strong>Livraison en France</strong><p class="form-hint">Estimation 3 à 5 jours</p></div></div>
+        <div class="reassurance-item"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M3 21h18"/><path d="M5 21V9l7-6 7 6v12"/></svg><div><strong>Livraison en France &amp; Belgique</strong><p class="form-hint">Estimation 3 à 5 jours</p></div></div>
         <div class="reassurance-item"><svg viewBox="0 0 24 24" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg><div><strong>Livraison à Kinshasa, RDC</strong><p class="form-hint">Estimation 3 à 5 jours</p></div></div>
         <div class="reassurance-item"><svg viewBox="0 0 24 24" stroke-width="1.4"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg><div><strong>Paiement sécurisé</strong><p class="form-hint">Traité par Stripe</p></div></div>
         <div class="reassurance-item"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><div><strong>Suivi de commande</strong><p class="form-hint">Depuis notre page dédiée</p></div></div>

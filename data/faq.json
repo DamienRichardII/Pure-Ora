@@ -1,5 +1,17 @@
 [
   {
+    "id": "prix-zone",
+    "question": "Pourquoi le prix est-il différent entre la France et Kinshasa ?",
+    "answer": "Pure Ora applique des tarifs distincts selon la zone de livraison. La postiche est proposée à 35 € pour la France et l'Europe, et à 45 $ pour Kinshasa. Les éventuels frais de livraison sont indiqués séparément lors de la commande.",
+    "category": "commande"
+  },
+  {
+    "id": "devise-paiement",
+    "question": "Dans quelle devise puis-je payer ?",
+    "answer": "Les commandes pour la France et l'Europe sont proposées en euros. Les commandes destinées à Kinshasa sont proposées en dollars américains. La devise applicable est affichée après la sélection de votre zone de livraison.",
+    "category": "commande"
+  },
+  {
     "id": "matiere",
     "question": "La postiche est-elle en cheveux naturels ?",
     "answer": "Notre postiche est fabriquée en fibres semi-naturelles de qualité, sélectionnées pour offrir un rendu naturel, une belle fluidité et un excellent confort.",
@@ -38,7 +50,7 @@
   {
     "id": "livraison",
     "question": "Livrez-vous à l'international ?",
-    "answer": "Nous livrons actuellement en France ainsi qu'à Kinshasa, en République démocratique du Congo. Les délais et frais de livraison sont indiqués au moment de la commande.",
+    "answer": "Nous livrons actuellement en France, en Belgique, ainsi qu'à Kinshasa, en République démocratique du Congo. Les délais et frais de livraison sont indiqués au moment de la commande.",
     "category": "livraison"
   },
   {

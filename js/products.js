@@ -1,8 +1,18 @@
 // products.js — Rendu des produits sur l'accueil (signature) et la boutique (grille).
 
+// Tarifs par zone (aucune conversion automatique) : on affiche toujours les
+// deux prix fixés manuellement, chacun accompagné de sa zone, pour éviter
+// qu'une cliente pense pouvoir choisir librement la devise.
+function productZonePriceLine(product) {
+  if (!product.prices) return "";
+  return Object.values(product.prices)
+    .filter((p) => p && p.amount !== null && p.amount !== undefined)
+    .map((p) => `<span class="product-card__zone-price">${window.PureOra.formatZoneAmount(p.amount, p.symbol)} <span class="product-card__zone-label">— ${p.label}</span></span>`)
+    .join("");
+}
+
 function productCardTemplate(product) {
   const img = product.images?.[0];
-  const price = window.PureOra.formatPrice(product.price, product.currency);
   return `
     <a class="product-card" href="produit.html?slug=${encodeURIComponent(product.slug)}" data-reveal data-category="${product.categoryId || ""}">
       <div class="product-card__media hover-zoom ratio-4x5">
@@ -12,9 +22,8 @@ function productCardTemplate(product) {
       </div>
       <h3 class="product-card__title">${product.name}</h3>
       <p class="form-hint" style="margin-bottom:.4rem;">${product.subtitle || ""}</p>
-      <p class="product-card__price">
-        ${product.compareAtPrice ? `<span class="product-card__old-price">${window.PureOra.formatPrice(product.compareAtPrice, product.currency)}</span>` : ""}
-        ${price}
+      <p class="product-card__price product-card__price--zones">
+        ${productZonePriceLine(product)}
       </p>
     </a>`;
 }

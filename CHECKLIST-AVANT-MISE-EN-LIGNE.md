@@ -1,6 +1,6 @@
 # Checklist avant mise en ligne — Pure Ora
 
-À valider avec Sheila Mavinga avant l'ouverture officielle des commandes.
+À valider avec Sheilla Mavinga avant l'ouverture officielle des commandes.
 
 ## Contenu produit
 - [ ] Prix final renseigné (`data/products.json` → `price`)
@@ -10,7 +10,7 @@
 - [ ] Vidéos finales ajoutées (hero, installation, rituel privé)
 
 ## Contenu de marque
-- [ ] Histoire de Sheila Mavinga rédigée et intégrée (`a-propos.html`, section À propos de l'accueil)
+- [ ] Histoire de Sheilla Mavinga rédigée et intégrée (`a-propos.html`, section À propos de l'accueil)
 - [ ] Texte de la section "Plus qu'une coiffure, un rituel pour soi" validé ou remplacé (`index.html`)
 - [ ] Avis clients authentiques ajoutés et validés (`data/reviews.json`, `"published": true`)
 - [ ] Portrait(s) de la fondatrice ajoutés

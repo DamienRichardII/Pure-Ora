@@ -1,9 +1,14 @@
-// checkout.js — Page commande : récapitulatif, CGV, redirection vers le paiement Stripe.
+// checkout.js — Page commande : récapitulatif, CGV, redirection vers le paiement.
+//
+// La zone de livraison (et donc la devise) est déterminée par les articles du panier
+// (chaque article porte shippingZone/currency) — jamais recalculée ni convertie ici.
+// Le lien de paiement utilisé est celui de la zone active : product.paymentLinks[zoneId].
 
 function renderCheckoutSummary() {
   const mount = document.getElementById("checkout-items");
   if (!mount) return;
   const items = window.PureOraCart.read();
+  const currency = window.PureOraCart.currentCurrency();
 
   if (items.length === 0) {
     mount.innerHTML = `<p class="cart-empty">Votre panier est vide. <a href="boutique.html" class="text-link">Retourner à la boutique</a></p>`;
@@ -23,16 +28,21 @@ function renderCheckoutSummary() {
 
   const subtotal = window.PureOraCart.subtotal();
   const hasUnpriced = window.PureOraCart.hasUnpricedItems();
-  document.getElementById("checkout-subtotal").textContent = hasUnpriced ? "Prix à venir" : window.PureOra.formatPrice(subtotal);
+  document.getElementById("checkout-subtotal").textContent = hasUnpriced ? "Prix à venir" : window.PureOra.formatPrice(subtotal, currency);
 
   const zones = window.PureOra?.shipping?.zones || [];
   const zoneId = window.PureOraCart.getShippingZone();
   const zone = zones.find((z) => z.id === zoneId);
+
+  const zoneLabel = window.PureOra.zoneLabels?.[zoneId] || zone?.name || "";
+  const zoneEl = document.getElementById("checkout-zone");
+  if (zoneEl) zoneEl.textContent = zoneLabel || "Non sélectionnée";
+
   const shippingEl = document.getElementById("checkout-shipping");
-  if (shippingEl) shippingEl.textContent = zone ? (zone.price == null ? (zone.note || "Communiqué lors de la commande") : window.PureOra.formatPrice(zone.price)) : "Non sélectionnée";
+  if (shippingEl) shippingEl.textContent = zone ? (zone.price == null ? (zone.note || "Communiqué lors de la commande") : window.PureOra.formatPrice(zone.price, zone.currency || currency)) : "Non sélectionnée";
 
   const totalEl = document.getElementById("checkout-total");
-  if (totalEl) totalEl.textContent = (hasUnpriced || !zone || zone.price == null) ? "Communiqué lors de la commande" : window.PureOra.formatPrice(subtotal + zone.price);
+  if (totalEl) totalEl.textContent = (hasUnpriced || !zone || zone.price == null) ? "Communiqué lors de la commande" : window.PureOra.formatPrice(subtotal + zone.price, currency);
 }
 
 function initCheckoutForm() {
@@ -54,11 +64,18 @@ function initCheckoutForm() {
       return;
     }
 
+    const zoneId = window.PureOraCart.getShippingZone();
+    if (!zoneId) {
+      showCheckoutStatus("Merci de sélectionner votre zone de livraison depuis le panier avant de continuer.", "error");
+      return;
+    }
+
     const featured = window.PureOra.featuredProduct || (window.PureOra.products || [])[0];
-    const paymentLink = featured?.paymentLink;
+    const paymentLink = featured?.paymentLinks?.[zoneId];
 
     if (!paymentLink || paymentLink.trim() === "") {
-      showCheckoutStatus("Le paiement en ligne n'est pas encore configuré (environnement de développement). Le lien Stripe doit être renseigné dans data/products.json.", "info");
+      const zoneLabel = window.PureOra.zoneLabels?.[zoneId] || zoneId;
+      showCheckoutStatus(`Le paiement en ligne n'est pas encore configuré pour la zone ${zoneLabel} (environnement de développement). Le lien doit être renseigné dans data/products.json ("paymentLinks.${zoneId}").`, "info");
       return;
     }
     window.location.href = paymentLink;

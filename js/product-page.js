@@ -1,4 +1,11 @@
 // product-page.js — Logique de la fiche produit et du bloc "produit signature" de l'accueil.
+//
+// Tarification par zone : chaque produit expose product.prices.{france,kinshasa}
+// (deux prix fixés manuellement, jamais convertis l'un depuis l'autre) et
+// product.paymentLinks.{france,kinshasa}. Le sélecteur de zone (fieldset de
+// radios accessibles) affiche toujours les deux tarifs sans en privilégier un,
+// et c'est la zone choisie qui détermine le prix affiché, le lien de paiement
+// utilisé et les données envoyées au panier.
 
 function getRequestedProduct() {
   const params = new URLSearchParams(location.search);
@@ -77,30 +84,98 @@ function initQuantitySelector(root, onChange) {
   return () => qty;
 }
 
+// ---------------------------------------------------------------------------
+// Sélecteur de zone de livraison — réutilisé sur l'accueil (Chapitre 01) et
+// sur la fiche produit. Rend un <fieldset> de vrais boutons radio, toujours
+// les deux zones visibles, aucune présélection par défaut sauf choix déjà
+// enregistré (localStorage pureOraShippingZone via Cart.getShippingZone()).
+// ---------------------------------------------------------------------------
+
+function zoneConfirmationText(product, zoneId) {
+  const zonePrice = product.prices?.[zoneId];
+  if (!zonePrice) return "";
+  const label = zonePrice.label || window.PureOra.zoneLabels?.[zoneId] || zoneId;
+  return `Prix pour ${label} : ${window.PureOra.formatZoneAmount(zonePrice.amount, zonePrice.symbol)}`;
+}
+
+function zoneOptionMarkup(zoneId, zonePrice, groupName, isSelected) {
+  const label = zonePrice?.label || window.PureOra.zoneLabels?.[zoneId] || zoneId;
+  const hasPrice = zonePrice && zonePrice.amount !== null && zonePrice.amount !== undefined;
+  const priceText = hasPrice ? window.PureOra.formatZoneAmount(zonePrice.amount, zonePrice.symbol) : "Prix à venir";
+  return `
+    <label class="zone-option${isSelected ? " is-selected" : ""}${hasPrice ? "" : " is-disabled"}" data-zone-option="${zoneId}">
+      <span class="zone-option__price">${priceText}</span>
+      <span class="zone-option__label">${label}</span>
+      <input type="radio" name="${groupName}" value="${zoneId}" ${isSelected ? "checked" : ""} ${hasPrice ? "" : "disabled"}>
+    </label>`;
+}
+
+function initZoneSelector(mountId, product) {
+  const mount = document.getElementById(mountId);
+  if (!mount || !product?.prices) return null;
+
+  const groupName = `shipping-zone--${mountId}`;
+  const zoneIds = Object.keys(product.prices);
+  const savedZone = window.PureOraCart?.getShippingZone?.() || "";
+  let currentZone = zoneIds.includes(savedZone) ? savedZone : "";
+
+  mount.innerHTML = `
+    <fieldset class="zone-selector">
+      <legend>Votre zone de livraison</legend>
+      <div class="zone-selector__options">
+        ${zoneIds.map((zid) => zoneOptionMarkup(zid, product.prices[zid], groupName, zid === currentZone)).join("")}
+      </div>
+      <p class="zone-selector__confirmation" aria-live="polite" data-zone-confirmation>${currentZone ? zoneConfirmationText(product, currentZone) : ""}</p>
+      <p class="form-hint zone-selector__note">Tarifs définis selon la zone de livraison — il ne s'agit pas d'une conversion automatique entre l'euro et le dollar.</p>
+    </fieldset>`;
+
+  const confirmationEl = mount.querySelector("[data-zone-confirmation]");
+  const listeners = [];
+
+  mount.querySelectorAll('input[type="radio"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      currentZone = input.value;
+      mount.querySelectorAll(".zone-option").forEach((el) => el.classList.remove("is-selected"));
+      input.closest(".zone-option")?.classList.add("is-selected");
+      if (confirmationEl) confirmationEl.textContent = zoneConfirmationText(product, currentZone);
+      listeners.forEach((fn) => fn(currentZone));
+    });
+  });
+
+  return {
+    getZone: () => currentZone,
+    onChange: (fn) => listeners.push(fn),
+    focus: () => mount.querySelector('input[type="radio"]')?.focus(),
+    scrollIntoView: () => mount.scrollIntoView({ behavior: "smooth", block: "center" }),
+  };
+}
+
+function promptForZone(zoneSelector) {
+  if (!zoneSelector) return;
+  zoneSelector.scrollIntoView();
+  zoneSelector.focus();
+  window.alert("Où souhaitez-vous être livrée ? Merci de choisir votre zone de livraison (France / Europe ou Kinshasa, RDC) avant de continuer.");
+}
+
 function initProductSignature(product) {
   const root = document.getElementById("product-signature");
   if (!root || !product) return;
 
   root.querySelector("[data-product-name]") && (root.querySelector("[data-product-name]").textContent = product.name);
-  const priceEl = root.querySelector("[data-product-price]");
-  if (priceEl) priceEl.textContent = window.PureOra.formatPrice(product.price, product.currency);
-  const oldPriceEl = root.querySelector("[data-product-old-price]");
-  if (oldPriceEl) {
-    if (product.compareAtPrice) { oldPriceEl.hidden = false; oldPriceEl.textContent = window.PureOra.formatPrice(product.compareAtPrice, product.currency); }
-    else oldPriceEl.hidden = true;
-  }
   const stockEl = root.querySelector("[data-product-stock]");
   if (stockEl) stockEl.textContent = product.stockDisplay || "";
 
   const galleryMount = root.querySelector("[data-product-gallery]");
   buildGallery(product, galleryMount);
 
+  const zoneSelector = initZoneSelector("zone-selector-home", product);
+
   const getColor = renderVariantGroup("variant-color-home", product.variants?.colors, "Couleur");
   const getLength = renderVariantGroup("variant-length-home", product.variants?.lengths, "Longueur");
   const getTexture = renderVariantGroup("variant-texture-home", product.variants?.textures, "Texture");
 
   const getQty = initQuantitySelector(root);
-  wireActions(root, product, { getColor, getLength, getTexture, getQty });
+  wireActions(root, product, { getColor, getLength, getTexture, getQty, zoneSelector });
 }
 
 function initProductPage(product) {
@@ -111,8 +186,6 @@ function initProductPage(product) {
   root.querySelector("[data-product-name]") && (root.querySelector("[data-product-name]").textContent = product.name);
   root.querySelector("[data-product-subtitle]") && (root.querySelector("[data-product-subtitle]").textContent = product.subtitle || "");
   root.querySelector("[data-product-description]") && (root.querySelector("[data-product-description]").textContent = product.longDescription || "");
-  const priceEl = root.querySelector("[data-product-price]");
-  if (priceEl) priceEl.textContent = window.PureOra.formatPrice(product.price, product.currency);
   const priceNote = root.querySelector("[data-product-price-note]");
   if (priceNote) priceNote.textContent = product.priceNote || "";
   const stockEl = root.querySelector("[data-product-stock]");
@@ -124,18 +197,27 @@ function initProductPage(product) {
   const galleryMount = root.querySelector("[data-product-gallery]");
   buildGallery(product, galleryMount);
 
+  const zoneSelector = initZoneSelector("zone-selector", product);
+
   const getColor = renderVariantGroup("variant-color", product.variants?.colors, "Couleur");
   const getLength = renderVariantGroup("variant-length", product.variants?.lengths, "Longueur");
   const getTexture = renderVariantGroup("variant-texture", product.variants?.textures, "Texture");
 
   const getQty = initQuantitySelector(root);
-  wireActions(root, product, { getColor, getLength, getTexture, getQty });
+  wireActions(root, product, { getColor, getLength, getTexture, getQty, zoneSelector });
 
-  // CTA mobile fixe
+  // CTA mobile fixe — reflète la zone sélectionnée, sans en imposer une par défaut.
   const mobileBar = document.getElementById("mobile-buybar");
   if (mobileBar) {
-    mobileBar.querySelector("[data-mobile-price]").textContent = window.PureOra.formatPrice(product.price, product.currency);
-    mobileBar.querySelector("[data-mobile-add]")?.addEventListener("click", () => addProductToCart(product, { getColor, getLength, getTexture, getQty: () => 1 }));
+    const mobilePriceEl = mobileBar.querySelector("[data-mobile-price]");
+    const updateMobilePrice = () => {
+      const zoneId = zoneSelector?.getZone();
+      const zonePrice = zoneId ? product.prices?.[zoneId] : null;
+      mobilePriceEl.textContent = zonePrice ? window.PureOra.formatZoneAmount(zonePrice.amount, zonePrice.symbol) : "Choisissez votre zone";
+    };
+    updateMobilePrice();
+    zoneSelector?.onChange(updateMobilePrice);
+    mobileBar.querySelector("[data-mobile-add]")?.addEventListener("click", () => addProductToCart(product, { getColor, getLength, getTexture, getQty: () => 1, zoneSelector }));
   }
 }
 
@@ -144,19 +226,32 @@ function variantLabel({ getColor, getLength, getTexture }) {
 }
 
 function addProductToCart(product, opts) {
-  window.PureOraCart.addItem({
+  const zoneId = opts.zoneSelector?.getZone();
+  if (!zoneId) {
+    promptForZone(opts.zoneSelector);
+    return false;
+  }
+  const zonePrice = product.prices?.[zoneId];
+  if (!zonePrice) return false;
+
+  const added = window.PureOraCart.addItem({
     id: product.id,
     name: product.name,
-    price: product.price,
-    currency: product.currency,
+    price: zonePrice.amount,
+    currency: zonePrice.currency,
+    currencySymbol: zonePrice.symbol,
     image: product.images?.[0]?.src,
     variantLabel: variantLabel(opts),
     qty: opts.getQty ? opts.getQty() : 1,
+    zoneId,
   });
+  if (!added) return false; // l'utilisateur a refusé de basculer le panier vers cette zone
+
   const drawer = document.getElementById("cart-drawer");
   const overlay = document.getElementById("cart-overlay");
   drawer?.classList.add("is-open");
   overlay?.classList.add("is-open");
+  return true;
 }
 
 function wireActions(root, product, opts) {
@@ -164,19 +259,21 @@ function wireActions(root, product, opts) {
     btn.addEventListener("click", () => addProductToCart(product, opts));
   });
   root.querySelectorAll("[data-buy-now]").forEach((btn) => {
-    const hasLink = product.paymentLink && product.paymentLink.trim() !== "";
-    if (!hasLink) {
-      btn.classList.add("is-disabled");
-      btn.setAttribute("title", "Lien de paiement en cours de configuration");
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Le paiement n'est pas encore configuré pour ce produit (environnement de développement). Ajoutez le lien Stripe dans data/products.json (\"paymentLink\").");
-      });
-      return;
-    }
-    btn.addEventListener("click", () => {
-      addProductToCart(product, opts);
-      window.location.href = product.paymentLink;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const zoneId = opts.zoneSelector?.getZone();
+      if (!zoneId) {
+        promptForZone(opts.zoneSelector);
+        return;
+      }
+      const link = product.paymentLinks?.[zoneId];
+      if (!link || link.trim() === "") {
+        const zoneLabel = product.prices?.[zoneId]?.label || zoneId;
+        window.alert(`Le paiement n'est pas encore configuré pour la zone ${zoneLabel} (environnement de développement). Ajoutez le lien dans data/products.json ("paymentLinks.${zoneId}").`);
+        return;
+      }
+      const added = addProductToCart(product, opts);
+      if (added) window.location.href = link;
     });
   });
 }

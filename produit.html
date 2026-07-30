@@ -19,6 +19,36 @@
 <link rel="stylesheet" href="css/animations.css?v=2">
 <link rel="stylesheet" href="css/pages/product.css?v=2">
 <link rel="stylesheet" href="css/responsive.css?v=2">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Postiche semi-naturelle Pure Ora",
+  "brand": { "@type": "Brand", "name": "Pure Ora" },
+  "description": "Postiche semi-naturelle légère, facile à installer et réutilisable, conçue pour un rendu naturel au quotidien. Premier lancement de l'univers Pure Ora.",
+  "offers": [
+    {
+      "@type": "Offer",
+      "url": "https://www.pureora.com/produit.html?slug=postiche-semi-naturelle-pure-ora",
+      "priceCurrency": "EUR",
+      "price": "35",
+      "availability": "https://schema.org/InStock",
+      "eligibleRegion": [
+        { "@type": "Country", "name": "France" },
+        { "@type": "Country", "name": "BE" }
+      ]
+    },
+    {
+      "@type": "Offer",
+      "url": "https://www.pureora.com/produit.html?slug=postiche-semi-naturelle-pure-ora",
+      "priceCurrency": "USD",
+      "price": "45",
+      "availability": "https://schema.org/InStock",
+      "eligibleRegion": { "@type": "Country", "name": "CD" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -36,9 +66,7 @@
       <h1 data-product-name style="font-size:var(--fs-h3);">Postiche semi-naturelle Pure Ora</h1>
       <p class="lede" data-product-subtitle style="margin-block:.5rem 1rem;">L'élégance en quelques minutes</p>
 
-      <div class="product-signature__price-row">
-        <span class="product-signature__price" data-product-price>Prix à venir</span>
-      </div>
+      <div id="zone-selector" data-zone-selector></div>
       <p class="form-hint" data-product-price-note>Prix à venir — sera communiqué avant l'ouverture des commandes</p>
       <span class="badge" data-product-stock style="margin-block:.75rem;">En précommande</span>
 
@@ -60,7 +88,7 @@
       </div>
 
       <ul class="product-signature__reassurance">
-        <li>🚚 Estimation de livraison : 3 à 5 jours (France et Kinshasa, RDC)</li>
+        <li>🚚 Estimation de livraison : 3 à 5 jours (France, Belgique et Kinshasa, RDC)</li>
         <li>🔒 Paiement sécurisé par carte, Apple Pay ou Google Pay</li>
         <li>↩️ Signalement possible sous 48h en cas de problème</li>
       </ul>
@@ -90,7 +118,7 @@
       <p>Pour préserver sa qualité, nous recommandons de l'entretenir régulièrement avec de l'eau et une huile légère afin de conserver sa souplesse et sa brillance. Consultez notre <a href="entretien.html" class="text-link">guide d'entretien complet</a>.</p>
     </div>
     <div class="product-tabs__panel" id="tab-livraison">
-      <p>Livraison en France et à Kinshasa, RDC, estimée entre 3 et 5 jours ouvrés après validation de la commande. Pour des raisons d'hygiène, les postiches ne sont ni reprises ni échangées après ouverture ou utilisation — voir notre page <a href="retours-remboursements.html" class="text-link">retours et remboursements</a>.</p>
+      <p>Livraison en France, en Belgique et à Kinshasa, RDC, estimée entre 3 et 5 jours ouvrés après validation de la commande. Pour des raisons d'hygiène, les postiches ne sont ni reprises ni échangées après ouverture ou utilisation — voir notre page <a href="retours-remboursements.html" class="text-link">retours et remboursements</a>.</p>
     </div>
     <div class="product-tabs__panel" id="tab-faq">
       <div class="faq-list" id="faq-list-home"></div>
@@ -109,7 +137,7 @@
 </main>
 
 <div class="mobile-buybar" id="mobile-buybar">
-  <span class="mobile-buybar__price" data-mobile-price>Prix à venir</span>
+  <span class="mobile-buybar__price" data-mobile-price>Choisissez votre zone</span>
   <button type="button" class="btn btn-primary" data-mobile-add>Ajouter au panier</button>
 </div>
 

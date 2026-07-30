@@ -13,10 +13,21 @@
     "subtitle": "L'élégance en quelques minutes",
     "shortDescription": "Une postiche semi-naturelle légère et réutilisable, pensée pour un rendu élégant et naturel au quotidien.",
     "longDescription": "Découvrez notre postiche semi-naturelle, conçue pour offrir un rendu élégant, naturel et facile à porter au quotidien. Grâce à son système de clips et de tirette, elle s'installe en quelques secondes et reste bien en place tout au long de la journée. Sa fibre semi-naturelle est douce, fluide et légère, pour un résultat harmonieux qui se fond parfaitement avec vos cheveux. Avec un bon entretien, elle est réutilisable pendant longtemps.",
-    "price": 35,
-    "compareAtPrice": null,
-    "currency": "EUR",
-    "priceNote": "Prix indiqué en euros. Les frais de livraison sont ajoutés selon la zone choisie.",
+    "prices": {
+      "france": {
+        "amount": 35,
+        "currency": "EUR",
+        "symbol": "€",
+        "label": "France / Europe"
+      },
+      "kinshasa": {
+        "amount": 45,
+        "currency": "USD",
+        "symbol": "$",
+        "label": "Kinshasa, RDC"
+      }
+    },
+    "priceNote": "Tarifs définis selon la zone de livraison. Il ne s'agit pas d'une conversion automatique entre l'euro et le dollar : ce sont deux prix fixés manuellement par Pure Ora.",
     "stockDisplay": "Disponible",
     "sku": "PO-POSTICHE-001",
     "images": [
@@ -66,21 +77,26 @@
       "Adaptée au quotidien et aux occasions spéciales"
     ],
     "careInstructions": "Pour préserver sa qualité, nous recommandons de l'entretenir régulièrement avec de l'eau et une huile légère afin de conserver sa souplesse et sa brillance.",
-    "shippingInfo": "Livraison en France et à Kinshasa, RDC. Délai indicatif de 3 à 5 jours.",
+    "shippingInfo": "Livraison en France, en Belgique et à Kinshasa, RDC. Délai indicatif de 3 à 5 jours.",
     "variants": {
       "colors": [],
       "lengths": [],
       "textures": []
     },
     "characteristics": [],
-    "paymentLink": "",
+    "paymentLinks": {
+      "france": "",
+      "kinshasa": ""
+    },
     "faqIds": [
       "matiere",
       "installation",
       "maintien",
       "quotidien",
       "entretien",
-      "duree"
+      "duree",
+      "prix-zone",
+      "devise-paiement"
     ]
   }
 ]

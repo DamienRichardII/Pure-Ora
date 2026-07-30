@@ -2,7 +2,7 @@
   "zones": [
     {
       "id": "france",
-      "name": "France",
+      "name": "France & Belgique",
       "price": null,
       "estimatedTime": "3 à 5 jours",
       "note": "Tarif de livraison communiqué lors de la commande"
@@ -11,9 +11,10 @@
       "id": "kinshasa",
       "name": "Kinshasa, RDC",
       "price": null,
+      "currency": "USD",
       "estimatedTime": "3 à 5 jours",
-      "note": "Prix total livré à Kinshasa (produit et frais de livraison compris) : équivalent à 45 $ US."
+      "note": "Frais de livraison à Kinshasa communiqués lors de la commande. Ce montant s'ajoute au prix du produit (45 $) et n'y est pas inclus."
     }
   ],
-  "disclaimer": "Les délais indiqués sont des estimations en jours ouvrés après validation de la commande par Pure Ora et ne constituent pas une garantie absolue. Le transporteur définitif sera communiqué ultérieurement."
+  "disclaimer": "Les délais indiqués sont des estimations en jours ouvrés après validation de la commande par Pure Ora et ne constituent pas une garantie absolue. Le transporteur définitif sera communiqué ultérieurement. Les prix des produits sont distincts des frais de livraison et sont définis manuellement par zone — il ne s'agit pas d'une conversion automatique entre l'euro et le dollar."
 }

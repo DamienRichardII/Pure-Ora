@@ -1,11 +1,27 @@
 // cart.js — Panier client géré en localStorage. Architecture prête pour plusieurs produits/variantes.
+//
+// Tarification par zone : Pure Ora vend le même produit à deux prix fixés manuellement
+// (35 € France/Europe, 45 $ Kinshasa) — ce n'est jamais une conversion de devise automatique.
+// La zone choisie (pureOraShippingZone) détermine à la fois le prix affiché et la livraison,
+// et un panier ne peut jamais contenir des articles dans deux devises différentes.
 
 const CART_STORAGE_KEY = "pureora_cart_v1";
-const SHIPPING_ZONE_KEY = "pureora_shipping_zone_v1";
+const SHIPPING_ZONE_KEY = "pureOraShippingZone";
+
+const ZONE_LABELS = {
+  france: "France / Europe",
+  kinshasa: "Kinshasa, RDC",
+};
 
 function formatPrice(amount, currency) {
   if (amount === null || amount === undefined) return "Prix à venir";
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: currency || "EUR" }).format(amount);
+}
+
+// Format court recommandé pour les prix de zone : "35 €", "45 $" (pas de conversion, juste le montant fixé).
+function formatZoneAmount(amount, symbol) {
+  if (amount === null || amount === undefined) return "Prix à venir";
+  return `${amount} ${symbol || ""}`.trim();
 }
 
 const Cart = {
@@ -21,17 +37,36 @@ const Cart = {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
     document.dispatchEvent(new CustomEvent("pureora:cart-updated", { detail: { items } }));
   },
-  addItem({ id, name, price, currency, image, variantLabel = "", qty = 1 }) {
+
+  /**
+   * Ajoute un article au panier pour une zone donnée.
+   * Si le panier contient déjà des articles pour une AUTRE zone (donc une autre devise),
+   * demande confirmation avant de vider le panier et de repartir sur la nouvelle zone.
+   * Retourne false si l'ajout a été annulé par la cliente.
+   */
+  addItem({ id, name, price, currency, currencySymbol, image, variantLabel = "", zoneId, qty = 1 }) {
     const items = this.read();
+    const existingZone = items[0]?.shippingZone;
+
+    if (items.length > 0 && existingZone && zoneId && existingZone !== zoneId) {
+      const message = `Votre panier est actuellement configuré pour la ${ZONE_LABELS[existingZone] || existingZone}. Souhaitez-vous le passer sur la zone ${ZONE_LABELS[zoneId] || zoneId} ?`;
+      const confirmed = window.confirm(message);
+      if (!confirmed) return false;
+      items.length = 0;
+    }
+
     const lineId = `${id}::${variantLabel}`;
     const existing = items.find((i) => i.lineId === lineId);
     if (existing) {
       existing.qty += qty;
     } else {
-      items.push({ lineId, id, name, price, currency, image, variantLabel, qty });
+      items.push({ lineId, id, name, price, currency, currencySymbol, image, variantLabel, qty, shippingZone: zoneId });
     }
     this.write(items);
+    if (zoneId) this.setShippingZone(zoneId);
+    return true;
   },
+
   updateQty(lineId, qty) {
     let items = this.read();
     if (qty <= 0) {
@@ -57,6 +92,10 @@ const Cart = {
   hasUnpricedItems() {
     return this.read().some((i) => i.price === null || i.price === undefined);
   },
+  /** Devise actuellement utilisée par le panier (déterminée par ses articles, pas par la zone seule). */
+  currentCurrency() {
+    return this.read()[0]?.currency || null;
+  },
   getShippingZone() {
     return localStorage.getItem(SHIPPING_ZONE_KEY) || "";
   },
@@ -64,11 +103,44 @@ const Cart = {
     localStorage.setItem(SHIPPING_ZONE_KEY, zoneId);
     document.dispatchEvent(new CustomEvent("pureora:shipping-zone-changed", { detail: { zoneId } }));
   },
+
+  /**
+   * Change la zone active depuis la page panier. Si le panier contient déjà des articles
+   * dans une autre devise, demande confirmation puis met à jour tous les articles avec
+   * le tarif de la nouvelle zone (à partir des prix du produit fourni).
+   */
+  changeZone(newZoneId, product) {
+    const items = this.read();
+    const existingZone = items[0]?.shippingZone;
+
+    if (items.length === 0 || !existingZone || existingZone === newZoneId) {
+      this.setShippingZone(newZoneId);
+      return true;
+    }
+
+    const message = `Votre panier est actuellement configuré pour la ${ZONE_LABELS[existingZone] || existingZone}. Souhaitez-vous le passer sur la zone ${ZONE_LABELS[newZoneId] || newZoneId} ?`;
+    const confirmed = window.confirm(message);
+    if (!confirmed) return false;
+
+    const zonePrice = product?.prices?.[newZoneId];
+    const remapped = items.map((item) => ({
+      ...item,
+      shippingZone: newZoneId,
+      price: zonePrice ? zonePrice.amount : item.price,
+      currency: zonePrice ? zonePrice.currency : item.currency,
+      currencySymbol: zonePrice ? zonePrice.symbol : item.currencySymbol,
+    }));
+    this.write(remapped);
+    this.setShippingZone(newZoneId);
+    return true;
+  },
 };
 
 window.PureOraCart = Cart;
 window.PureOra = window.PureOra || {};
 window.PureOra.formatPrice = formatPrice;
+window.PureOra.formatZoneAmount = formatZoneAmount;
+window.PureOra.zoneLabels = ZONE_LABELS;
 
 /* ---------- Rendu du panier (drawer + header + page panier) ---------- */
 
@@ -82,6 +154,7 @@ function renderCartCount() {
 
 function cartLineTemplate(item) {
   const currency = item.currency || "EUR";
+  const zoneLabel = ZONE_LABELS[item.shippingZone] || "";
   return `
     <div class="cart-line" data-line-id="${item.lineId}">
       <div class="cart-line__thumb ratio-1x1">
@@ -90,6 +163,7 @@ function cartLineTemplate(item) {
       <div class="cart-line__body">
         <span class="cart-line__title">${item.name}</span>
         ${item.variantLabel ? `<span class="form-hint">${item.variantLabel}</span>` : ""}
+        ${zoneLabel ? `<span class="form-hint">Livraison : ${zoneLabel}</span>` : ""}
         <span>${formatPrice(item.price, currency)}</span>
         <div class="cart-line__qty">
           <button type="button" data-qty-decrease aria-label="Réduire la quantité">−</button>
@@ -131,7 +205,7 @@ function renderCartDrawer() {
   if (foot) {
     foot.hidden = false;
     const subtotalEl = document.getElementById("cart-drawer-subtotal");
-    if (subtotalEl) subtotalEl.textContent = Cart.hasUnpricedItems() ? "Prix à venir" : formatPrice(Cart.subtotal());
+    if (subtotalEl) subtotalEl.textContent = Cart.hasUnpricedItems() ? "Prix à venir" : formatPrice(Cart.subtotal(), Cart.currentCurrency());
   }
 }
 
@@ -159,9 +233,10 @@ function updateCartPageSummary() {
   const shippingEl = document.getElementById("cart-shipping-line");
   if (!subtotalEl) return;
 
+  const currency = Cart.currentCurrency();
   const subtotal = Cart.subtotal();
   const hasUnpriced = Cart.hasUnpricedItems();
-  subtotalEl.textContent = hasUnpriced ? "Prix à venir" : formatPrice(subtotal);
+  subtotalEl.textContent = hasUnpriced ? "Prix à venir" : formatPrice(subtotal, currency);
 
   const zones = window.PureOra?.shipping?.zones || [];
   const zoneId = Cart.getShippingZone();
@@ -173,7 +248,7 @@ function updateCartPageSummary() {
     } else if (zone.price === null || zone.price === undefined) {
       shippingEl.textContent = zone.note || "Tarif de livraison communiqué lors de la commande";
     } else {
-      shippingEl.textContent = formatPrice(zone.price);
+      shippingEl.textContent = formatPrice(zone.price, zone.currency || currency);
     }
   }
 
@@ -181,13 +256,12 @@ function updateCartPageSummary() {
     if (hasUnpriced || !zone || zone.price === null || zone.price === undefined) {
       totalEl.textContent = "Communiqué lors de la commande";
     } else {
-      totalEl.textContent = formatPrice(subtotal + zone.price);
+      totalEl.textContent = formatPrice(subtotal + zone.price, currency);
     }
   }
 
   const checkoutBtn = document.getElementById("go-to-checkout");
-  if (checkoutBtn) checkoutBtn.classList.toggle("is-disabled", items_or_empty());
-  function items_or_empty() { return Cart.read().length === 0; }
+  if (checkoutBtn) checkoutBtn.classList.toggle("is-disabled", Cart.read().length === 0);
 }
 
 function populateShippingZoneSelect() {
@@ -199,8 +273,15 @@ function populateShippingZoneSelect() {
   const saved = Cart.getShippingZone();
   if (saved) select.value = saved;
   select.addEventListener("change", () => {
-    Cart.setShippingZone(select.value);
+    const product = window.PureOra?.featuredProduct;
+    const applied = Cart.changeZone(select.value, product);
+    if (!applied) {
+      // La cliente a refusé le changement : on revient à la zone précédente dans le sélecteur.
+      select.value = Cart.getShippingZone();
+      return;
+    }
     updateCartPageSummary();
+    renderCartPage();
   });
 }
 
@@ -241,6 +322,8 @@ function initCartDrawerToggle() {
   closeBtn?.addEventListener("click", close);
   overlay?.addEventListener("click", close);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+
+  window.PureOraCartDrawer = { open, close };
 }
 
 document.addEventListener("pureora:components-ready", () => {

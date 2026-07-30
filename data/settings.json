@@ -1,7 +1,7 @@
 {
   "brand": {
     "name": "Pure Ora",
-    "founder": "Sheila Mavinga",
+    "founder": "Sheilla Mavinga",
     "signature": "L'aura à l'état pur.",
     "tagline": "L'élégance en quelques minutes.",
     "positioning": "L'univers de la beauté capillaire et du bien-être.",
@@ -11,7 +11,7 @@
   },
   "announcementBar": {
     "enabled": true,
-    "text": "Livraison en France et à Kinshasa"
+    "text": "Livraison en France, en Belgique et à Kinshasa"
   },
   "contact": {
     "whatsapp": "",

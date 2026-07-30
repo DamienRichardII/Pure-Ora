@@ -22,7 +22,7 @@ Formats et dimensions recommandés pour chaque média du site. Respecter ces rat
 
 | Média | Ratio | Notes |
 |---|---|---|
-| Portrait de Sheila | 4:5 | Portrait vertical, lumière naturelle recommandée |
+| Portrait de Sheilla | 4:5 | Portrait vertical, lumière naturelle recommandée |
 
 ## Avant / Après
 

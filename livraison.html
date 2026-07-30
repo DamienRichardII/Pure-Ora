@@ -34,14 +34,20 @@
       <h2>Zones desservies</h2>
       <ul>
         <li>France</li>
+        <li>Belgique</li>
         <li>Kinshasa, République démocratique du Congo</li>
       </ul>
 
       <h2>Délai indicatif</h2>
       <p>Le délai indicatif de livraison est de <strong>3 à 5 jours</strong>. Ce délai correspond à une estimation en jours ouvrés après validation définitive de la commande par Pure Ora, et ne constitue pas une garantie absolue.</p>
 
+      <h2>Prix du produit selon la zone</h2>
+      <p>Pure Ora applique deux tarifs distincts, fixés manuellement selon la zone de livraison — il ne s'agit jamais d'une conversion automatique entre l'euro et le dollar.</p>
+      <div id="product-zone-prices" style="margin-top:1rem;"></div>
+      <p class="form-hint" style="margin-top:.5rem;">Ces montants correspondent uniquement au prix du produit. Les frais de livraison, présentés ci-dessous, s'y ajoutent séparément et ne sont pas inclus.</p>
+
       <h2>Frais de livraison</h2>
-      <p>Les frais de livraison sont administrables par zone et affichés directement dans votre panier au moment de la commande.</p>
+      <p>Les frais de livraison sont distincts du prix du produit. Ils sont administrables par zone et affichés directement dans votre panier au moment de la commande.</p>
       <div id="shipping-zones-table" style="margin-top:1rem;"></div>
 
       <h2>Déroulement de la livraison</h2>
@@ -80,7 +86,16 @@ document.addEventListener("pureora:data-ready", () => {
   mount.innerHTML = zones.map(z => `
     <div style="display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border-soft);">
       <strong>${z.name}</strong>
-      <span>${z.price == null ? (z.note || "Tarif communiqué lors de la commande") : window.PureOra.formatPrice(z.price)} — ${z.estimatedTime}</span>
+      <span>${z.price == null ? (z.note || "Tarif communiqué lors de la commande") : window.PureOra.formatPrice(z.price, z.currency)} — ${z.estimatedTime}</span>
+    </div>`).join("");
+
+  const priceMount = document.getElementById("product-zone-prices");
+  const product = window.PureOra.featuredProduct || (window.PureOra.products || [])[0];
+  const prices = product?.prices || {};
+  priceMount.innerHTML = Object.values(prices).map(p => `
+    <div style="display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border-soft);">
+      <strong>${p.label}</strong>
+      <span>${window.PureOra.formatZoneAmount(p.amount, p.symbol)}</span>
     </div>`).join("");
 });
 </script>
