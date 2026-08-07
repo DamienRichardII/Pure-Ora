@@ -3,7 +3,7 @@
 @media (max-width: 480px) {
   .container { padding-inline: 1.1rem; }
   .btn { padding: 0.95rem 1.6rem; font-size: 0.9rem; }
-  .site-header__logo { font-size: 1.35rem; }
+  .site-header__logo-img { height: 36px; max-width: 110px; }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {

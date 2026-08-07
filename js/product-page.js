@@ -85,76 +85,17 @@ function initQuantitySelector(root, onChange) {
 }
 
 // ---------------------------------------------------------------------------
-// Sélecteur de zone de livraison — réutilisé sur l'accueil (Chapitre 01) et
-// sur la fiche produit. Rend un <fieldset> de vrais boutons radio, toujours
-// les deux zones visibles, aucune présélection par défaut sauf choix déjà
-// enregistré (localStorage pureOraShippingZone via Cart.getShippingZone()).
+// Sélecteur "Où souhaitez-vous être livrée ?" — le composant lui-même (gros
+// boutons tactiles, toutes les zones actives de data/shipping.json, aucune
+// présélection sauf choix déjà enregistré) vit dans cart.js et est partagé
+// avec la page panier. Ici on se contente de l'instancier pour la fiche produit.
 // ---------------------------------------------------------------------------
-
-function zoneConfirmationText(product, zoneId) {
-  const zonePrice = product.prices?.[zoneId];
-  if (!zonePrice) return "";
-  const label = zonePrice.label || window.PureOra.zoneLabels?.[zoneId] || zoneId;
-  return `Prix pour ${label} : ${window.PureOra.formatZoneAmount(zonePrice.amount, zonePrice.symbol)}`;
-}
-
-function zoneOptionMarkup(zoneId, zonePrice, groupName, isSelected) {
-  const label = zonePrice?.label || window.PureOra.zoneLabels?.[zoneId] || zoneId;
-  const hasPrice = zonePrice && zonePrice.amount !== null && zonePrice.amount !== undefined;
-  const priceText = hasPrice ? window.PureOra.formatZoneAmount(zonePrice.amount, zonePrice.symbol) : "Prix à venir";
-  return `
-    <label class="zone-option${isSelected ? " is-selected" : ""}${hasPrice ? "" : " is-disabled"}" data-zone-option="${zoneId}">
-      <span class="zone-option__price">${priceText}</span>
-      <span class="zone-option__label">${label}</span>
-      <input type="radio" name="${groupName}" value="${zoneId}" ${isSelected ? "checked" : ""} ${hasPrice ? "" : "disabled"}>
-    </label>`;
-}
-
-function initZoneSelector(mountId, product) {
-  const mount = document.getElementById(mountId);
-  if (!mount || !product?.prices) return null;
-
-  const groupName = `shipping-zone--${mountId}`;
-  const zoneIds = Object.keys(product.prices);
-  const savedZone = window.PureOraCart?.getShippingZone?.() || "";
-  let currentZone = zoneIds.includes(savedZone) ? savedZone : "";
-
-  mount.innerHTML = `
-    <fieldset class="zone-selector">
-      <legend>Votre zone de livraison</legend>
-      <div class="zone-selector__options">
-        ${zoneIds.map((zid) => zoneOptionMarkup(zid, product.prices[zid], groupName, zid === currentZone)).join("")}
-      </div>
-      <p class="zone-selector__confirmation" aria-live="polite" data-zone-confirmation>${currentZone ? zoneConfirmationText(product, currentZone) : ""}</p>
-      <p class="form-hint zone-selector__note">Tarifs définis selon la zone de livraison — il ne s'agit pas d'une conversion automatique entre l'euro et le dollar.</p>
-    </fieldset>`;
-
-  const confirmationEl = mount.querySelector("[data-zone-confirmation]");
-  const listeners = [];
-
-  mount.querySelectorAll('input[type="radio"]').forEach((input) => {
-    input.addEventListener("change", () => {
-      currentZone = input.value;
-      mount.querySelectorAll(".zone-option").forEach((el) => el.classList.remove("is-selected"));
-      input.closest(".zone-option")?.classList.add("is-selected");
-      if (confirmationEl) confirmationEl.textContent = zoneConfirmationText(product, currentZone);
-      listeners.forEach((fn) => fn(currentZone));
-    });
-  });
-
-  return {
-    getZone: () => currentZone,
-    onChange: (fn) => listeners.push(fn),
-    focus: () => mount.querySelector('input[type="radio"]')?.focus(),
-    scrollIntoView: () => mount.scrollIntoView({ behavior: "smooth", block: "center" }),
-  };
-}
 
 function promptForZone(zoneSelector) {
   if (!zoneSelector) return;
   zoneSelector.scrollIntoView();
   zoneSelector.focus();
-  window.alert("Où souhaitez-vous être livrée ? Merci de choisir votre zone de livraison (France / Europe ou Kinshasa, RDC) avant de continuer.");
+  window.alert("Où souhaitez-vous être livrée ? Merci de choisir votre zone de livraison avant de continuer.");
 }
 
 function initProductSignature(product) {
@@ -168,7 +109,7 @@ function initProductSignature(product) {
   const galleryMount = root.querySelector("[data-product-gallery]");
   buildGallery(product, galleryMount);
 
-  const zoneSelector = initZoneSelector("zone-selector-home", product);
+  const zoneSelector = window.PureOra.renderShippingSelector("zone-selector-home", { product });
 
   const getColor = renderVariantGroup("variant-color-home", product.variants?.colors, "Couleur");
   const getLength = renderVariantGroup("variant-length-home", product.variants?.lengths, "Longueur");
@@ -197,7 +138,7 @@ function initProductPage(product) {
   const galleryMount = root.querySelector("[data-product-gallery]");
   buildGallery(product, galleryMount);
 
-  const zoneSelector = initZoneSelector("zone-selector", product);
+  const zoneSelector = window.PureOra.renderShippingSelector("zone-selector", { product });
 
   const getColor = renderVariantGroup("variant-color", product.variants?.colors, "Couleur");
   const getLength = renderVariantGroup("variant-length", product.variants?.lengths, "Longueur");

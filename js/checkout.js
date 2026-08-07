@@ -8,7 +8,6 @@ function renderCheckoutSummary() {
   const mount = document.getElementById("checkout-items");
   if (!mount) return;
   const items = window.PureOraCart.read();
-  const currency = window.PureOraCart.currentCurrency();
 
   if (items.length === 0) {
     mount.innerHTML = `<p class="cart-empty">Votre panier est vide. <a href="boutique.html" class="text-link">Retourner à la boutique</a></p>`;
@@ -26,23 +25,18 @@ function renderCheckoutSummary() {
       </div>`).join("");
   }
 
-  const subtotal = window.PureOraCart.subtotal();
-  const hasUnpriced = window.PureOraCart.hasUnpricedItems();
-  document.getElementById("checkout-subtotal").textContent = hasUnpriced ? "Prix à venir" : window.PureOra.formatPrice(subtotal, currency);
+  const totals = window.PureOraCart.calculateCartTotal();
 
-  const zones = window.PureOra?.shipping?.zones || [];
-  const zoneId = window.PureOraCart.getShippingZone();
-  const zone = zones.find((z) => z.id === zoneId);
+  document.getElementById("checkout-subtotal").textContent = totals.hasUnpriced ? "Prix à venir" : window.PureOra.formatPrice(totals.subtotal, totals.currency);
 
-  const zoneLabel = window.PureOra.zoneLabels?.[zoneId] || zone?.name || "";
   const zoneEl = document.getElementById("checkout-zone");
-  if (zoneEl) zoneEl.textContent = zoneLabel || "Non sélectionnée";
+  if (zoneEl) zoneEl.textContent = totals.zone?.label || "Non sélectionnée";
 
   const shippingEl = document.getElementById("checkout-shipping");
-  if (shippingEl) shippingEl.textContent = zone ? (zone.price == null ? (zone.note || "Communiqué lors de la commande") : window.PureOra.formatPrice(zone.price, zone.currency || currency)) : "Non sélectionnée";
+  if (shippingEl) shippingEl.textContent = totals.shippingText;
 
   const totalEl = document.getElementById("checkout-total");
-  if (totalEl) totalEl.textContent = (hasUnpriced || !zone || zone.price == null) ? "Communiqué lors de la commande" : window.PureOra.formatPrice(subtotal + zone.price, currency);
+  if (totalEl) totalEl.textContent = totals.total === null ? "Communiqué lors de la commande" : window.PureOra.formatPrice(totals.total, totals.currency);
 }
 
 function initCheckoutForm() {
@@ -74,8 +68,8 @@ function initCheckoutForm() {
     const paymentLink = featured?.paymentLinks?.[zoneId];
 
     if (!paymentLink || paymentLink.trim() === "") {
-      const zoneLabel = window.PureOra.zoneLabels?.[zoneId] || zoneId;
-      showCheckoutStatus(`Le paiement en ligne n'est pas encore configuré pour la zone ${zoneLabel} (environnement de développement). Le lien doit être renseigné dans data/products.json ("paymentLinks.${zoneId}").`, "info");
+      const label = window.PureOra.zoneLabel(zoneId);
+      showCheckoutStatus(`Le paiement en ligne n'est pas encore configuré pour la zone ${label} (environnement de développement). Le lien doit être renseigné dans data/products.json ("paymentLinks.${zoneId}").`, "info");
       return;
     }
     window.location.href = paymentLink;

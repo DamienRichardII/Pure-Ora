@@ -42,22 +42,33 @@ Formats et dimensions recommandés pour chaque média du site. Respecter ces rat
 |---|---|---|
 | Photo jointe à un avis (facultative) | 1:1 | Uniquement des photos authentiques fournies par de vraies clientes |
 
+## Logo officiel Pure Ora
+
+| Fichier | Usage |
+|---|---|
+| `assets/branding/pure-ora-logo-transparent.png` | Logo complet (monogramme + "Pure Ora"), fond transparent — usages génériques |
+| `assets/branding/pure-ora-logo.png` | Logo complet, fond blanc — usages nécessitant un fond opaque |
+| `assets/branding/pure-ora-monogram.png` | Monogramme seul (sans texte), fond transparent — utilisé dans le header (desktop + mobile), ratio compact adapté aux petites hauteurs |
+| `assets/branding/pure-ora-google-512.png` | Logo complet, 512×512, fond blanc — référencé dans le JSON-LD `Organization.logo` |
+
+Le monogramme header a été recadré à partir du fichier source officiel (aucune retouche du dessin lui-même) pour rester lisible aux hauteurs réduites d'un header ; le logo complet reste utilisé partout où l'espace le permet (Open Graph, données structurées).
+
 ## Image de partage (Open Graph)
 
 | Média | Dimensions | Notes |
 |---|---|---|
-| `assets/images/social/og-image.jpg` | 1200×630 px | Une version de démonstration est déjà fournie ; à remplacer par un visuel de marque définitif |
+| `assets/social/pure-ora-og.jpg` | 1200×630 px | Visuel de marque officiel (monogramme + "Pure Ora"), utilisé pour `og:image` et `twitter:image` sur toutes les pages principales |
 
 ## Favicon
 
 | Fichier | Dimensions |
 |---|---|
-| `favicon/favicon.ico` | multi-résolution (16, 32, 48, 64 px) |
-| `favicon/favicon-16.png`, `favicon-32.png` | 16×16, 32×32 |
+| `favicon/favicon.ico` | multi-résolution (16, 32, 48, 256 px) |
+| `favicon/favicon-16.png`, `favicon-32.png`, `favicon-48.png` | 16×16, 32×32, 48×48 |
 | `favicon/apple-touch-icon.png` | 180×180 |
 | `favicon/icon-192.png`, `icon-512.png` | 192×192, 512×512 (PWA / `manifest.json`) |
 
-Des icônes de démonstration (monogramme "PO") sont déjà en place. Remplacez-les par le logo définitif de Pure Ora dès qu'il sera disponible, en conservant les mêmes noms de fichiers.
+Ces fichiers utilisent désormais le monogramme officiel Pure Ora (recadré depuis le logo source, non retouché). L'ancien fichier `favicon/logo.jpeg` (source non optimisée, marges blanches importantes) n'est plus référencé nulle part et a été laissé en place sans usage actif.
 
 ## Formats et poids recommandés
 

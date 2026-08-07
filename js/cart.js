@@ -1,27 +1,67 @@
-// cart.js — Panier client géré en localStorage. Architecture prête pour plusieurs produits/variantes.
+// cart.js — Panier client géré en localStorage + logique de livraison par zone.
+// Architecture prête pour plusieurs produits/variantes et pour de nouvelles zones.
 //
 // Tarification par zone : Pure Ora vend le même produit à deux prix fixés manuellement
-// (35 € France/Europe, 45 $ Kinshasa) — ce n'est jamais une conversion de devise automatique.
-// La zone choisie (pureOraShippingZone) détermine à la fois le prix affiché et la livraison,
-// et un panier ne peut jamais contenir des articles dans deux devises différentes.
+// (35 € France/Belgique, 45 $ Kinshasa) — ce n'est jamais une conversion de devise automatique.
+// La zone choisie (pureOraShippingZone) détermine à la fois le prix affiché et les frais de
+// livraison, et un panier ne peut jamais contenir des articles dans deux devises différentes.
+//
+// Toutes les zones (France, Kinshasa, et celles ajoutées plus tard) sont décrites dans
+// data/shipping.json. Aucune zone n'est codée en dur ici : la liste des destinations, leurs
+// libellés, devises et frais sont entièrement pilotés par ce fichier de données.
 
 const CART_STORAGE_KEY = "pureora_cart_v1";
 const SHIPPING_ZONE_KEY = "pureOraShippingZone";
 
-const ZONE_LABELS = {
-  france: "France / Europe",
-  kinshasa: "Kinshasa, RDC",
-};
+function getShippingZones() {
+  return (window.PureOra?.shipping?.zones || []).filter((z) => z.enabled);
+}
 
-function formatPrice(amount, currency) {
+function getZoneMeta(zoneId) {
+  const zones = window.PureOra?.shipping?.zones || [];
+  return zones.find((z) => z.id === zoneId) || null;
+}
+
+function zoneLabel(zoneId) {
+  return getZoneMeta(zoneId)?.label || zoneId;
+}
+
+function formatCurrency(amount, currency) {
   if (amount === null || amount === undefined) return "Prix à venir";
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: currency || "EUR" }).format(amount);
 }
+// Alias conservé pour compatibilité avec le reste du site.
+const formatPrice = formatCurrency;
 
 // Format court recommandé pour les prix de zone : "35 €", "45 $" (pas de conversion, juste le montant fixé).
 function formatZoneAmount(amount, symbol) {
   if (amount === null || amount === undefined) return "Prix à venir";
-  return `${amount} ${symbol || ""}`.trim();
+  return `${amount} ${symbol || ""}`.trim();
+}
+
+// Texte générique pour des frais non encore configurés — jamais "0 €" / "Gratuit".
+function shippingFeeText(zone) {
+  if (!zone) return "Sélectionnez votre zone de livraison";
+  if (zone.shippingPrice === null || zone.shippingPrice === undefined) {
+    return "Les frais de livraison seront précisés avant le paiement.";
+  }
+  return formatCurrency(zone.shippingPrice, zone.currency);
+}
+
+/**
+ * Calcule les frais de livraison pour une zone donnée. Fonction unique et générique :
+ * ne contient aucune branche par zone ("if france" / "if kinshasa").
+ */
+function calculateShipping(zoneId) {
+  const zone = getZoneMeta(zoneId);
+  if (!zone) return { zone: null, shippingPrice: null, currency: null, known: false, text: shippingFeeText(null) };
+  return {
+    zone,
+    shippingPrice: zone.shippingPrice,
+    currency: zone.currency,
+    known: zone.shippingPrice !== null && zone.shippingPrice !== undefined,
+    text: shippingFeeText(zone),
+  };
 }
 
 const Cart = {
@@ -49,7 +89,7 @@ const Cart = {
     const existingZone = items[0]?.shippingZone;
 
     if (items.length > 0 && existingZone && zoneId && existingZone !== zoneId) {
-      const message = `Votre panier est actuellement configuré pour la ${ZONE_LABELS[existingZone] || existingZone}. Souhaitez-vous le passer sur la zone ${ZONE_LABELS[zoneId] || zoneId} ?`;
+      const message = `Votre panier est actuellement configuré pour la zone ${zoneLabel(existingZone)}. Souhaitez-vous le passer sur la zone ${zoneLabel(zoneId)} ?`;
       const confirmed = window.confirm(message);
       if (!confirmed) return false;
       items.length = 0;
@@ -105,9 +145,9 @@ const Cart = {
   },
 
   /**
-   * Change la zone active depuis la page panier. Si le panier contient déjà des articles
-   * dans une autre devise, demande confirmation puis met à jour tous les articles avec
-   * le tarif de la nouvelle zone (à partir des prix du produit fourni).
+   * Change la zone active (depuis la fiche produit ou la page panier). Si le panier contient
+   * déjà des articles dans une autre devise, demande confirmation puis met à jour tous les
+   * articles avec le tarif de la nouvelle zone (à partir des prix du produit fourni).
    */
   changeZone(newZoneId, product) {
     const items = this.read();
@@ -118,7 +158,7 @@ const Cart = {
       return true;
     }
 
-    const message = `Votre panier est actuellement configuré pour la ${ZONE_LABELS[existingZone] || existingZone}. Souhaitez-vous le passer sur la zone ${ZONE_LABELS[newZoneId] || newZoneId} ?`;
+    const message = `Votre panier est actuellement configuré pour la zone ${zoneLabel(existingZone)}. Souhaitez-vous le passer sur la zone ${zoneLabel(newZoneId)} ?`;
     const confirmed = window.confirm(message);
     if (!confirmed) return false;
 
@@ -134,13 +174,137 @@ const Cart = {
     this.setShippingZone(newZoneId);
     return true;
   },
+
+  /**
+   * Calcul générique et unique du total panier : sous-total produits + frais de livraison
+   * de la zone active. Aucune branche par zone — tout vient de calculateShipping().
+   */
+  calculateCartTotal() {
+    const items = this.read();
+    const currency = this.currentCurrency();
+    const subtotal = this.subtotal();
+    const hasUnpriced = this.hasUnpricedItems();
+    const zoneId = this.getShippingZone();
+    const shipping = calculateShipping(zoneId);
+
+    const totalKnown = !hasUnpriced && shipping.known;
+    return {
+      items,
+      currency,
+      subtotal,
+      hasUnpriced,
+      zoneId,
+      zone: shipping.zone,
+      shippingPrice: shipping.shippingPrice,
+      shippingKnown: shipping.known,
+      shippingText: shipping.text,
+      total: totalKnown ? subtotal + shipping.shippingPrice : null,
+    };
+  },
 };
 
 window.PureOraCart = Cart;
 window.PureOra = window.PureOra || {};
 window.PureOra.formatPrice = formatPrice;
+window.PureOra.formatCurrency = formatCurrency;
 window.PureOra.formatZoneAmount = formatZoneAmount;
-window.PureOra.zoneLabels = ZONE_LABELS;
+window.PureOra.calculateShipping = calculateShipping;
+window.PureOra.getShippingZones = getShippingZones;
+window.PureOra.zoneLabel = zoneLabel;
+
+/* ---------- Sélecteur "Où souhaitez-vous être livrée ?" — réutilisable ---------- */
+// Composant unique utilisé par la fiche produit (accueil + produit.html) et par la page
+// panier : gros boutons tactiles (jamais de petit <select>), toutes les zones actives
+// affichées, aucune présélection imposée sauf choix déjà enregistré.
+
+function shippingOptionMarkup(zone, product, groupName, isSelected) {
+  const zonePrice = product?.prices?.[zone.id];
+  const priceText = zonePrice ? formatZoneAmount(zonePrice.amount, zonePrice.symbol) : "";
+  const shipping = calculateShipping(zone.id);
+  return `
+    <label class="shipping-option${isSelected ? " is-selected" : ""}" data-shipping-option="${zone.id}">
+      <input type="radio" name="${groupName}" value="${zone.id}" ${isSelected ? "checked" : ""}>
+      <span class="shipping-option__flag" aria-hidden="true">${zone.flag || ""}</span>
+      <span class="shipping-option__body">
+        <span class="shipping-option__label">${zone.label}</span>
+        <span class="shipping-option__meta">${priceText ? `${priceText} produit` : ""}${priceText ? " · " : ""}Livraison : ${shipping.text}</span>
+      </span>
+    </label>`;
+}
+
+function shippingSummaryText(zone, product) {
+  if (!zone) return "";
+  const zonePrice = product?.prices?.[zone.id];
+  const shipping = calculateShipping(zone.id);
+  const parts = [`Livraison : ${zone.label}`];
+  if (zonePrice) parts.push(`Produit : ${formatZoneAmount(zonePrice.amount, zonePrice.symbol)}`);
+  parts.push(`Frais de livraison : ${shipping.text}`);
+  if (zonePrice && shipping.known) {
+    parts.push(`Total estimé : ${formatCurrency(zonePrice.amount + shipping.shippingPrice, zonePrice.currency)}`);
+  }
+  return parts.join(" — ");
+}
+
+/**
+ * Rend le sélecteur de zone dans `mountId`. `product` (optionnel) permet d'afficher le prix
+ * produit associé à chaque zone en plus des frais de livraison. `onChange(zoneId)` est appelé
+ * après un changement de zone accepté par la cliente (ou immédiatement si le panier est vide).
+ */
+function renderShippingSelector(mountId, { product, onChange } = {}) {
+  const mount = document.getElementById(mountId);
+  if (!mount) return null;
+
+  const zones = getShippingZones();
+  if (zones.length === 0) return null;
+
+  const groupName = `pureora-shipping--${mountId}`;
+  const savedZone = Cart.getShippingZone();
+  let currentZoneId = zones.find((z) => z.id === savedZone) ? savedZone : "";
+  const listeners = onChange ? [onChange] : [];
+
+  const paint = () => {
+    const currentZone = zones.find((z) => z.id === currentZoneId) || null;
+    mount.innerHTML = `
+      <fieldset class="shipping-selector">
+        <legend>Où souhaitez-vous être livrée ?</legend>
+        <div class="shipping-selector__options">
+          ${zones.map((z) => shippingOptionMarkup(z, product, groupName, z.id === currentZoneId)).join("")}
+        </div>
+        <p class="shipping-selector__summary" aria-live="polite" data-shipping-summary>${currentZone ? shippingSummaryText(currentZone, product) : ""}</p>
+      </fieldset>`;
+
+    mount.querySelectorAll('input[type="radio"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        const newZoneId = input.value;
+        const applied = Cart.changeZone(newZoneId, product);
+        if (!applied) {
+          // La cliente a refusé la bascule : on revient visuellement à la zone précédente.
+          input.checked = false;
+          const prev = mount.querySelector(`input[value="${currentZoneId}"]`);
+          if (prev) prev.checked = true;
+          return;
+        }
+        currentZoneId = newZoneId;
+        mount.querySelectorAll(".shipping-option").forEach((el) => el.classList.remove("is-selected"));
+        input.closest(".shipping-option")?.classList.add("is-selected");
+        const summaryEl = mount.querySelector("[data-shipping-summary]");
+        if (summaryEl) summaryEl.textContent = shippingSummaryText(zones.find((z) => z.id === newZoneId), product);
+        listeners.forEach((fn) => fn(newZoneId));
+      });
+    });
+  };
+
+  paint();
+
+  return {
+    getZone: () => currentZoneId,
+    onChange: (fn) => listeners.push(fn),
+    focus: () => mount.querySelector('input[type="radio"]')?.focus(),
+    scrollIntoView: () => mount.scrollIntoView({ behavior: "smooth", block: "center" }),
+  };
+}
+
+window.PureOra.renderShippingSelector = renderShippingSelector;
 
 /* ---------- Rendu du panier (drawer + header + page panier) ---------- */
 
@@ -154,7 +318,7 @@ function renderCartCount() {
 
 function cartLineTemplate(item) {
   const currency = item.currency || "EUR";
-  const zoneLabel = ZONE_LABELS[item.shippingZone] || "";
+  const label = item.shippingZone ? zoneLabel(item.shippingZone) : "";
   return `
     <div class="cart-line" data-line-id="${item.lineId}">
       <div class="cart-line__thumb ratio-1x1">
@@ -163,8 +327,8 @@ function cartLineTemplate(item) {
       <div class="cart-line__body">
         <span class="cart-line__title">${item.name}</span>
         ${item.variantLabel ? `<span class="form-hint">${item.variantLabel}</span>` : ""}
-        ${zoneLabel ? `<span class="form-hint">Livraison : ${zoneLabel}</span>` : ""}
-        <span>${formatPrice(item.price, currency)}</span>
+        ${label ? `<span class="form-hint">Livraison : ${label}</span>` : ""}
+        <span>${formatCurrency(item.price, currency)}</span>
         <div class="cart-line__qty">
           <button type="button" data-qty-decrease aria-label="Réduire la quantité">−</button>
           <span>${item.qty}</span>
@@ -204,8 +368,11 @@ function renderCartDrawer() {
 
   if (foot) {
     foot.hidden = false;
+    const totals = Cart.calculateCartTotal();
     const subtotalEl = document.getElementById("cart-drawer-subtotal");
-    if (subtotalEl) subtotalEl.textContent = Cart.hasUnpricedItems() ? "Prix à venir" : formatPrice(Cart.subtotal(), Cart.currentCurrency());
+    if (subtotalEl) subtotalEl.textContent = totals.hasUnpriced ? "Prix à venir" : formatCurrency(totals.subtotal, totals.currency);
+    const zoneEl = document.getElementById("cart-drawer-zone");
+    if (zoneEl) zoneEl.textContent = totals.zone ? `Livraison : ${totals.zone.label}` : "Zone de livraison à choisir";
   }
 }
 
@@ -233,55 +400,25 @@ function updateCartPageSummary() {
   const shippingEl = document.getElementById("cart-shipping-line");
   if (!subtotalEl) return;
 
-  const currency = Cart.currentCurrency();
-  const subtotal = Cart.subtotal();
-  const hasUnpriced = Cart.hasUnpricedItems();
-  subtotalEl.textContent = hasUnpriced ? "Prix à venir" : formatPrice(subtotal, currency);
-
-  const zones = window.PureOra?.shipping?.zones || [];
-  const zoneId = Cart.getShippingZone();
-  const zone = zones.find((z) => z.id === zoneId);
-
-  if (shippingEl) {
-    if (!zone) {
-      shippingEl.textContent = "Sélectionnez votre zone de livraison";
-    } else if (zone.price === null || zone.price === undefined) {
-      shippingEl.textContent = zone.note || "Tarif de livraison communiqué lors de la commande";
-    } else {
-      shippingEl.textContent = formatPrice(zone.price, zone.currency || currency);
-    }
-  }
-
-  if (totalEl) {
-    if (hasUnpriced || !zone || zone.price === null || zone.price === undefined) {
-      totalEl.textContent = "Communiqué lors de la commande";
-    } else {
-      totalEl.textContent = formatPrice(subtotal + zone.price, currency);
-    }
-  }
+  const totals = Cart.calculateCartTotal();
+  subtotalEl.textContent = totals.hasUnpriced ? "Prix à venir" : formatCurrency(totals.subtotal, totals.currency);
+  if (shippingEl) shippingEl.textContent = totals.shippingText;
+  if (totalEl) totalEl.textContent = totals.total === null ? "Communiqué lors de la commande" : formatCurrency(totals.total, totals.currency);
 
   const checkoutBtn = document.getElementById("go-to-checkout");
   if (checkoutBtn) checkoutBtn.classList.toggle("is-disabled", Cart.read().length === 0);
 }
 
-function populateShippingZoneSelect() {
-  const select = document.getElementById("shipping-zone-select");
-  if (!select) return;
-  const zones = window.PureOra?.shipping?.zones || [];
-  select.innerHTML = `<option value="">Choisir une zone de livraison</option>` +
-    zones.map((z) => `<option value="${z.id}">${z.name} — ${z.estimatedTime}</option>`).join("");
-  const saved = Cart.getShippingZone();
-  if (saved) select.value = saved;
-  select.addEventListener("change", () => {
-    const product = window.PureOra?.featuredProduct;
-    const applied = Cart.changeZone(select.value, product);
-    if (!applied) {
-      // La cliente a refusé le changement : on revient à la zone précédente dans le sélecteur.
-      select.value = Cart.getShippingZone();
-      return;
-    }
-    updateCartPageSummary();
-    renderCartPage();
+function initShippingSelectorOnCartPage() {
+  const mount = document.getElementById("shipping-zone-selector");
+  if (!mount) return;
+  const product = window.PureOra?.featuredProduct || (window.PureOra?.products || [])[0];
+  renderShippingSelector("shipping-zone-selector", {
+    product,
+    onChange: () => {
+      updateCartPageSummary();
+      renderCartPage();
+    },
   });
 }
 
@@ -332,7 +469,7 @@ document.addEventListener("pureora:components-ready", () => {
   initCartDrawerToggle();
 });
 document.addEventListener("pureora:data-ready", () => {
-  populateShippingZoneSelect();
+  initShippingSelectorOnCartPage();
   updateCartPageSummary();
 });
 document.addEventListener("DOMContentLoaded", () => {
