@@ -33,15 +33,17 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  overflow: visible;
 }
 .site-header__logo-img {
-  height: 46px;
+  height: auto;
   width: auto;
+  max-height: 58px;
   max-width: 150px;
   object-fit: contain;
   display: block;
 }
-.mobile-menu__top .site-header__logo-img { height: 34px; max-width: 120px; }
+.mobile-menu__top .site-header__logo-img { max-height: 42px; max-width: 130px; }
 .site-header__nav {
   display: none;
 }
