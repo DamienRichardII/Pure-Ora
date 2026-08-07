@@ -35,15 +35,14 @@
   flex-shrink: 0;
   overflow: visible;
 }
+/* Logo complet (monogramme + "Pure Ora") — dimensionné par la largeur, jamais par un carré forcé. */
 .site-header__logo-img {
+  width: 130px;
   height: auto;
-  width: auto;
-  max-height: 58px;
-  max-width: 150px;
   object-fit: contain;
   display: block;
 }
-.mobile-menu__top .site-header__logo-img { max-height: 42px; max-width: 130px; }
+.mobile-menu__top .site-header__logo-img { width: 110px; height: auto; }
 .site-header__nav {
   display: none;
 }
